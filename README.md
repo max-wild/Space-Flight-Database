@@ -1,5 +1,7 @@
 # Space-Flight-Database
- 
+
+**Team Members:** Austin Webber and Max Wild
+
 ## Install and Run the package
 ### (Inside a terminal window in the file directory:)
 Command to install packages:
