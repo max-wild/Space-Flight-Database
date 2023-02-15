@@ -1,0 +1,28 @@
+{
+  "name": "space-flight-database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/max-wild/Space-Flight-Database.git"
+  },
+  "keywords": [
+    "Human",
+    "Space",
+    "Flight"
+  ],
+  "author": "Austin Webber and Max Wild",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/max-wild/Space-Flight-Database/issues"
+  },
+  "homepage": "https://github.com/max-wild/Space-Flight-Database#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
