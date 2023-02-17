@@ -6,23 +6,37 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Description</th>
+        <th class="th_description">Description</th>
         <th>Launch Date</th>
         <th>Successfully Completed</th>
+        <th>Organization ID</th>
     </tr>
     <tr>
-        <td>Alfreds Futterkiste</td>
-        <td>Maria Anders</td>
-        <td>Germany</td>
-        <td>Germany</td>
-        <td>Germany</td>
+        <td>1</td>
+        <td>Parkinson Investigation</td>
+        <td class="th_description">A group of astronauts will be sent to the ISS to further observe how Parkinson's
+    disease affects brain cells in a zero-G environment.</td>
+        <td>2026-04-13</td>
+        <td></td>
+        <td>2</td>
     </tr>
     <tr>
-        <td>Centro comercial Moctezuma</td>
-        <td>Francisco Chang</td>
-        <td>Mexico</td>
-        <td>Germany</td>
-        <td>Germany</td>
+        <td>2</td>
+        <td>Life Search on Europa</td>
+        <td class="th_description">The core of Europa is warm enough to heat water into liquid form. Scientists will
+    travel to Europa to investigate alien life.</td>
+        <td>2030-02-24</td>
+        <td></td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Asteroid Belt Mining</td>
+        <td class="th_description">In the asteroid belt between Mars, a very large deposit of the rare element Astatine
+    been found. An astronaut will lead a robot team to explore.</td>
+        <td>2033-05-05</td>
+        <td></td>
+        <td>3</td>
     </tr>
 </table>
 
@@ -30,11 +44,6 @@
 
     <form action="/missions" method="POST">
         <h3 class="form_title">Add Data</h3>
-
-        <div class="form_group">
-            <label for="mission_id">ID</label>
-            <input required value="" type="text" name="mission_id" id="mission_id">
-        </div>
 
         <div class="form_group">
             <label for="name">Name</label>
@@ -56,6 +65,11 @@
             <input type="checkbox" name="successful_completion" id="successful_completion"></input>
         </div>
 
+        <div class="form_group">
+            <label for="organization_id">Organization ID</label>
+            <input required type="number" name="organization_id" id="organization_id"></input>
+        </div>
+
         <button type="submit">Add</button>
         <button type="reset">Clear</button>
     </form>
@@ -68,7 +82,7 @@
 
         <div class="form_group">
             <label for="mission_id">ID</label>
-            <input required value="" type="text" name="mission_id" id="mission_id">
+            <input required type="number" name="mission_id" id="mission_id">
         </div>
 
         <div class="form_group">
@@ -91,6 +105,11 @@
             <input type="checkbox" name="successful_completion" id="successful_completion"></input>
         </div>
 
+        <div class="form_group">
+            <label for="organization_id">Organization ID</label>
+            <input type="number" name="organization_id" id="organization_id"></input>
+        </div>
+
         <button type="submit">Update</button>
         <button type="reset">Clear</button>
     </form>
@@ -103,7 +122,7 @@
 
         <div class="form_group">
             <label for="mission_id">ID</label>
-            <input required value="" type="text" name="mission_id" id="mission_id">
+            <input required type="number" name="mission_id" id="mission_id">
         </div>
 
         <button type="submit">Delete</button>

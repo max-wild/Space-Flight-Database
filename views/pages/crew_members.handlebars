@@ -12,20 +12,28 @@
         <th>Home Base Leader</th>
     </tr>
     <tr>
-        <td>Alfreds Futterkiste</td>
-        <td>Maria Anders</td>
-        <td>Germany</td>
-        <td>Example data</td>
-        <td>Example data</td>
-        <td>Example data</td>
+        <td>1</td>
+        <td>Angelina</td>
+        <td>Sanchez</td>
+        <td>United States of America</td>
+        <td>1992-01-19</td>
+        <td></td>
     </tr>
     <tr>
-        <td>Centro comercial Moctezuma</td>
-        <td>Francisco Chang</td>
-        <td>Mexico</td>
-        <td>Example data</td>
-        <td>Example data</td>
-        <td>Example data</td>
+        <td>2</td>
+        <td>Abubakar</td>
+        <td>Ajayi</td>
+        <td>United States of America</td>
+        <td>1976-11-20</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Sara</td>
+        <td>Heron</td>
+        <td>Ukraine</td>
+        <td>1975-07-02</td>
+        <td></td>
     </tr>
 </table>
 
@@ -33,11 +41,6 @@
 
     <form action="/crew_members" method="POST">
         <h3 class="form_title">Add Data</h3>
-
-        <div class="form_group">
-            <label for="crew_member_id">ID</label>
-            <input required value="" type="text" name="crew_member_id" id="crew_member_id">
-        </div>
 
         <div class="form_group">
             <label for="first_name">First Name</label>
@@ -76,7 +79,7 @@
 
         <div class="form_group">
             <label for="crew_member_id">ID</label>
-            <input required value="" type="text" name="crew_member_id" id="crew_member_id">
+            <input required type="number" name="crew_member_id" id="crew_member_id">
         </div>
 
         <div class="form_group">
@@ -116,7 +119,7 @@
 
         <div class="form_group">
             <label for="crew_member_id">ID</label>
-            <input required value="" type="text" name="crew_member_id" id="crew_member_id">
+            <input required type="number" name="crew_member_id" id="crew_member_id">
         </div>
 
         <button type="submit">Delete</button>
