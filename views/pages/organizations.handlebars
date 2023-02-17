@@ -2,13 +2,11 @@
 
 <p>Organizations information</p>
 
-<p>Gotta upload CURD stuff...</p>
-
 <table>
     <tr>
-        <th>Example Data 1</th>
-        <th>Example Data 2</th>
-        <th>Example Data 3</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Country</th>
     </tr>
     <tr>
         <td>Alfreds Futterkiste</td>
@@ -22,3 +20,68 @@
     </tr>
 </table>
 
+<div class="flexbox_forms">
+
+    <form action="/organizations" method="POST">
+        <h3 class="form_title">Add Data</h3>
+
+        <div class="form_group">
+            <label for="organization_id">ID</label>
+            <input required value="" type="text" name="organization_id" id="organization_id">
+        </div>
+
+        <div class="form_group">
+            <label for="name">Name</label>
+            <input required value="" type="text" name="name" id="name"></input>
+        </div>
+
+        <div class="form_group">
+            <label for="country">Country</label>
+            <input required type="text" name="country" id="country"></textarea>
+        </div>
+
+        <button type="submit">Add</button>
+        <button type="reset">Clear</button>
+    </form>
+
+
+    <form action="/organizations?_method=PUT" method="POST">
+        <h3 class="form_title">Update Data</h3>
+
+        <p>Identify the ID, and leave any fields which you don't wish to update blank.</p>
+
+        <div class="form_group">
+            <label for="organization_id">ID</label>
+            <input required value="" type="text" name="organization_id" id="organization_id">
+        </div>
+
+        <div class="form_group">
+            <label for="name">Name</label>
+            <input value="" type="text" name="name" id="name"></input>
+        </div>
+
+        <div class="form_group">
+            <label for="country">Country</label>
+            <input value="" type="text" name="country" id="country"></textarea>
+        </div>
+
+        <button type="submit">Update</button>
+        <button type="reset">Clear</button>
+    </form>
+
+
+    <form action="/organizations?_method=DELETE" method="POST">
+        <h3 class="form_title">Delete Data</h3>
+
+        <p>Identify the ID of what you wish to delete.</p>
+
+        <div class="form_group">
+            <label for="organization_id">ID</label>
+            <input required value="" type="text" name="organization_id" id="organization_id">
+        </div>
+
+        <button type="submit">Delete</button>
+        <button type="reset">Clear</button>
+    </form>
+
+</div>
