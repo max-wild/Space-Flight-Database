@@ -12,7 +12,7 @@ app.engine('handlebars', exphbs.engine({
 app.set('view engine', 'handlebars')
 
 
-app.use(express.urlencoded({ extended: false }))  // Let's us see information in the body from sent html forms
+app.use(express.urlencoded({ extended: false }))  // Lets us see information in the body from sent html forms
 app.use(express.static('public'))
 
 
