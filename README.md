@@ -26,4 +26,4 @@ With upward trends for space flight expansion, this database will support catalo
 
 ## Database Schema
 
-![Fish Editor](docs/images/schema.png)
+![Database Schema](docs/images/schema.png)
