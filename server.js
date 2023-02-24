@@ -27,7 +27,9 @@ var db_entities = [
     'crew_members',
     'external_sites',
     'missions',
-    'organizations'
+    'organizations',
+    'missions_crew_members',
+    'missions_external_sites'
 ]
 
 // Send it to the right entity if requested
@@ -37,7 +39,7 @@ app.get('/:entity', (req, res, next) => {
 
     if(db_entities.includes(entity_name)){
 
-        res.status(200).render('pages/' + entity_name)  // Renders views/pages/[entity].handlebars
+        res.status(200).render('tables/' + entity_name)  // Renders views/tables/[entity].handlebars
     
     }else{
 

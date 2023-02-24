@@ -1,5 +1,3 @@
-<a href="/home">Home</a>
-
 <p>Crew Members information</p>
 
 <table>
@@ -75,11 +73,16 @@
     <form action="/crew_members?_method=PUT" method="POST">
         <h3 class="form_title">Update Data</h3>
 
-        <p>Identify the ID, and leave any fields which you don't wish to update blank.</p>
-
         <div class="form_group">
-            <label for="crew_member_id">ID</label>
-            <input required type="number" name="crew_member_id" id="crew_member_id">
+
+            <label for="crew_member_select">Crew Member</label>
+            <select name="crew_member_select">
+
+                <option value="1">Angelina Sanchez</option>
+                <option value="2">Abubakar Ajayi</option>
+                <option value="3">Sara Heron</option>
+                
+            </select>        
         </div>
 
         <div class="form_group">
@@ -115,11 +118,17 @@
     <form action="/crew_members?_method=DELETE" method="POST">
         <h3 class="form_title">Delete Data</h3>
 
-        <p>Identify the ID of what you wish to delete.</p>
-
         <div class="form_group">
-            <label for="crew_member_id">ID</label>
-            <input required type="number" name="crew_member_id" id="crew_member_id">
+
+            <label for="crew_member_select">Crew Member</label>
+            <select name="crew_member_select">
+
+                <option value="1">Angelina Sanchez</option>
+                <option value="2">Abubakar Ajayi</option>
+                <option value="3">Sara Heron</option>
+                
+            </select>        
+
         </div>
 
         <button type="submit">Delete</button>

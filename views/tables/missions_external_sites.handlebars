@@ -1,0 +1,98 @@
+<p>Missions and their Crew Members</p>
+
+<table>
+    <tr>
+        <th>Mission</th>
+        <th>External Site</th>
+    </tr>
+    <tr>
+        <td>Parkinson Investigation</td>
+        <td>International Space Station</td>
+    </tr>
+    <tr>
+        <td>Life Search on Europa</td>
+        <td>Europa</td>
+    </tr>
+    <tr>
+        <td>Asteroid Belt Mining</td>
+        <td>Asteroid Belt</td>
+    </tr>
+    <tr>
+        <td>Asteroid Belt Mining</td>
+        <td>International Space Station</td>
+    </tr>
+</table>
+
+<div class="flexbox_forms">
+
+    <form action="/missions_crew_members" method="POST">
+        <h3 class="form_title">Add Data</h3>
+
+        <p>Add the external site to the mission:</p>
+
+        <div class="form_group">
+
+            <label for="mission_select">Mission</label>
+            <select name="mission_select">
+
+                <option value="1">Parkinson Investigation</option>
+                <option value="2">Life Search on Europa</option>
+                <option value="3">Asteroid Belt Mining</option>
+                
+            </select>
+
+        </div>
+
+        <div class="form_group">
+
+            <label for="external_site_select">External Site</label>
+            <select name="external_site_select">
+
+                <option value="1">International Space Station</option>
+                <option value="2">Europa</option>
+                <option value="3">Asteroid Belt</option>
+                
+            </select>              
+        </div>
+
+        <button type="submit">Add</button>
+        <button type="reset">Clear</button>
+    </form>
+
+
+
+    <form action="/missions?_method=DELETE" method="POST">
+        <h3 class="form_title">Delete Data</h3>
+
+        <p>Remove the extermal site from the mission:</p>
+
+        <div class="form_group">
+
+            <label for="mission_select">Mission</label>
+            <select name="mission_select">
+
+                <option value="1">Parkinson Investigation</option>
+                <option value="2">Life Search on Europa</option>
+                <option value="3">Asteroid Belt Mining</option>
+                
+            </select>
+
+        </div>
+
+        <div class="form_group">
+
+            <label for="external_site_select">External Site</label>
+            <select name="external_site_select">
+
+                <option value="1">International Space Station</option>
+                <option value="2">Europa</option>
+                <option value="3">Asteroid Belt</option>
+                
+            </select>              
+        </div>
+
+        <button type="submit">Delete</button>
+        <button type="reset">Clear</button>
+    </form>
+
+</div>
