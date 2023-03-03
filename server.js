@@ -1,10 +1,18 @@
+//*********************************
+//
+// SETUP
+//
+//*********************************
+
 var express = require("express")
 var exphbs = require("express-handlebars")
+var util = require('util')
+var db = require('./database/db-connector.js')
 
-const PORT = process.env.PORT || 23374;
-var app = express();
+const PORT = process.env.PORT || 23374
+var app = express()
 
-// Setting the view engine
+// View Engine
 app.engine('handlebars', exphbs.engine({
 
     'defaultLayout': 'main'  // Referencing views/layouts/main.handlebars
@@ -14,6 +22,24 @@ app.set('view engine', 'handlebars')
 
 app.use(express.urlencoded({ extended: false }))  // Lets us see information in the body from sent html forms
 app.use(express.static('public'))
+
+// Making a PROMISE object out of the db.pool.query() command
+// This just lets us cleanly use the "await" keyword with db.pool.query()
+const db_query = util.promisify(db.pool.query).bind(db.pool)
+
+async function attempt_query(attempted_query){
+
+    try{
+
+        var result = await db_query(attempted_query)
+        return result
+
+    }catch (error){
+
+        console.log('Error:', error)
+        throw error
+    }
+}
 
 
 
@@ -33,13 +59,21 @@ var db_entities = [
 ]
 
 // Send it to the right entity if requested
-app.get('/:entity', (req, res, next) => {
+app.get('/:entity', async (req, res, next) => {
 
     var entity_name = req.params.entity.toLowerCase()
 
     if(db_entities.includes(entity_name)){
 
-        res.status(200).render('tables/' + entity_name)  // Renders views/tables/[entity].handlebars
+        var mission_query = 'SELECT m.mission_id, m.name, m.description, m.launch_date, m.successful_completion, org.name FROM Missions AS m JOIN Organizations AS org ON m.organization_id = org.organization_id;'
+
+        var mission_data = await attempt_query(mission_query)
+
+        console.log('MISSION DATA:', mission_data)
+
+        // Renders views/tables/[entity].handlebars
+        res.status(200).render('tables/' + entity_name,
+                                {data: mission_data})  
     
     }else{
 
@@ -49,11 +83,18 @@ app.get('/:entity', (req, res, next) => {
 
 
 // Basic 'send everything to home'
-app.get('*', (req, res, next) => {
+app.get('*', async (req, res, next) => {
 
     res.status(200).render('pages/home')  // Renders views/pages/home.handlebars
 })
 
+
+
+//*********************************
+//
+// LISTENER
+//
+//*********************************
 
 app.listen(PORT, function (err) {
 

@@ -9,6 +9,21 @@
         <th>Successfully Completed</th>
         <th>Organization</th>
     </tr>
+
+    {{#each data}}
+
+    <tr>
+        <td>{{this.mission_id}}</td>
+        <td>{{this.name}}</td>
+        <td class="th_description">{{this.description}}</td>
+        <td>{{this.launch_date}}</td>
+        <td>{{this.successful_completion}}</td>
+        <td>{{this.organization_id}}</td>
+    </tr>
+
+    {{/each}}
+
+{{!--     
     <tr>
         <td>1</td>
         <td>Parkinson Investigation</td>
@@ -43,7 +58,7 @@
         <td>2060-03-12</td>
         <td></td>
         <td>The Latin American and Caribbean Space Agency</td>
-    </tr>
+    </tr> --}}
 </table>
 
 <div class="flexbox_forms">
