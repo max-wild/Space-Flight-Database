@@ -77,9 +77,14 @@ th, td{
     padding: 3px 8px;
 }
 
-.th_description{
+.th_long{
 
-    width: 250px;
+    width: 200px;
+}
+
+.th_longer{
+
+    width: 300px;
 }
 
 .flexbox_forms{

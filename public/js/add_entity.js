@@ -1,10 +1,10 @@
 // Get the objects we need to modify
-var addPersonForm = document.getElementById('add_mission_form')
+var add_entry_form = document.getElementById('add_form')
 
 // Modify the objects we need
-addPersonForm.addEventListener('submit', function (e) {
+add_entry_form.addEventListener('submit', function (e) {
     
-    // Prevent the form from submitting
+    // Stop the form from submitting
     e.preventDefault()
 
     // Get form fields we need to get data from
@@ -48,7 +48,7 @@ addPersonForm.addEventListener('submit', function (e) {
             add_row_to_table(xhttp.response)
 
             // Clear the input fields for another transaction
-            addPersonForm.reset()
+            add_entry_form.reset()
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
 
@@ -101,6 +101,17 @@ add_row_to_table = (data) => {
     row.appendChild(succ_cell)
     row.appendChild(org_cell)
     
+    // Add a row attribute so the deleteRow function can find a newly added row
+    row.setAttribute('data_value', new_row.mission_id);
+
     // Add the row to the table
     current_table.appendChild(row)
+
+    // Now add it to the select elements too
+    var entry_selects = document.getElementsByClassName('entry_select')
+    for(var i = 0; i < entry_selects.length; i++){
+
+        entry_selects[i].insertAdjacentHTML('beforeend', 
+                                            `<option value="${new_row.mission_id}">${new_row.name}</option>`)
+    }
 }

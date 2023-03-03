@@ -6,7 +6,18 @@
         <th>Name</th>
         <th>Distance From Earth (mi)</th>
     </tr>
-    <tr>
+
+    {{#each data}}
+
+        <tr data_value="{{this.external_site_id}}">
+            <td>{{this.external_site_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.dist_from_earth}}</td>
+        </tr>
+
+    {{/each}}
+
+    {{!-- <tr>
         <td>1</td>
         <td>International Space Station</td>
         <td>254</td>
@@ -20,7 +31,7 @@
         <td>3</td>
         <td>Asteroid Belt</td>
         <td>111,500,000</td>
-    </tr>
+    </tr> --}}
 </table>
 
 <div class="flexbox_forms">

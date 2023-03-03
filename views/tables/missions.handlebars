@@ -12,22 +12,22 @@
 
     {{#each data}}
 
-        <tr>
+        <tr data_value="{{this.mission_id}}">
             <td>{{this.mission_id}}</td>
             <td>{{this.name}}</td>
-            <td class="th_description">{{this.description}}</td>
+            <td class="th_longer">{{this.description}}</td>
             <td>{{this.launch_date}}</td>
             <td>{{this.successful_completion}}</td>
-            <td>{{this.organization_name}}</td>
+            <td class="th_long">{{this.organization_name}}</td>
         </tr>
 
     {{/each}}
 
 </table>
 
-<div class="flexbox_forms" id="add_mission_form">
+<div class="flexbox_forms">
 
-    <form >
+    <form id="add_form">
         <h3 class="form_title">Add a Mission</h3>
 
         <div class="form_group">
@@ -55,17 +55,13 @@
             <label for="organization_select">Organization</label>
             <select name="organization_select" id="add_organization_select">
 
+                <option value="-1">No Organization</option>
+
                 {{#each organizations}}
 
                     <option value="{{this.organization_id}}">{{this.name}}</option>
 
                 {{/each}}
-
-                <option value="-1">No Organization</option>
-
-                {{!-- <option value="1">The National Aeronautics and Space Administration</option>
-                <option value="2">The Latin American and Caribbean Space Agency</option>
-                <option value="3">The South African National Space Agency</option> --}}
                 
             </select>          
         </div>
@@ -81,18 +77,13 @@
 
         <div class="form_group">
             <label for="mission_select">Mission</label>
-            <select name="mission_select">
+            <select name="mission_select" class="entry_select">
 
                 {{#each data}}
 
                     <option value="{{this.mission_id}}">{{this.name}}</option>
 
                 {{/each}}
-
-                {{!-- <option value="1">Parkinson Investigation</option>
-                <option value="2">Life Search on Europa</option>
-                <option value="3">Asteroid Belt Mining</option>
-                <option value="4">Untitled Venus Terraforming Project</option> --}}
                 
             </select>
         </div>
@@ -122,18 +113,14 @@
             <label for="organization_select">Organization</label>
             <select name="organization_select">
 
+                <option value="-1">No Organization</option>
+
                 {{#each organizations}}
 
                     <option value="{{this.organization_id}}">{{this.name}}</option>
 
                 {{/each}}
 
-                <option value="-1">No Organization</option>
-
-                {{!-- <option value="1">The National Aeronautics and Space Administration</option>
-                <option value="2">The Latin American and Caribbean Space Agency</option>
-                <option value="3">The South African National Space Agency</option> --}}
-                
             </select>          
         </div>
 
@@ -142,24 +129,19 @@
     </form>
 
 
-    <form action="/missions?_method=DELETE" method="POST">
+    <form id="delete_form">
         <h3 class="form_title">Delete a Mission</h3>
 
         <div class="form_group">
 
             <label for="mission_select">Mission</label>
-            <select name="mission_select">
+            <select name="mission_select" id="delete_select" class="entry_select">
 
                 {{#each data}}
 
                     <option value="{{this.mission_id}}">{{this.name}}</option>
 
                 {{/each}}
-
-                {{!-- <option value="1">Parkinson Investigation</option>
-                <option value="2">Life Search on Europa</option>
-                <option value="3">Asteroid Belt Mining</option>
-                <option value="4">Untitled Venus Terraforming Project</option> --}}
                 
             </select>
 
@@ -185,5 +167,5 @@
 
 </div>
 
-<script src="/js/add_mission.js"></script>
-<script src="/js/delete_mission.js"></script>
+<script src="/js/add_entity.js"></script>
+<script src="/js/delete_entity.js"></script>
