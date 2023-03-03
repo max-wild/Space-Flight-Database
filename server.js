@@ -7,7 +7,9 @@
 var express = require("express")
 var exphbs = require("express-handlebars")
 var util = require('util')
+
 var db = require('./database/db-connector.js')
+const { get_read_query } = require('./database/read_query_master.js')
 
 const PORT = process.env.PORT || 23374
 var app = express()
@@ -65,11 +67,11 @@ app.get('/:entity', async (req, res, next) => {
 
     if(db_entities.includes(entity_name)){
 
-        var mission_query = 'SELECT m.mission_id, m.name, m.description, m.launch_date, m.successful_completion, org.name FROM Missions AS m JOIN Organizations AS org ON m.organization_id = org.organization_id;'
+        var mission_query = get_read_query(entity_name)
 
         var mission_data = await attempt_query(mission_query)
 
-        console.log('MISSION DATA:', mission_data)
+        
 
         // Renders views/tables/[entity].handlebars
         res.status(200).render('tables/' + entity_name,
@@ -89,6 +91,11 @@ app.get('*', async (req, res, next) => {
 })
 
 
+app.post('*', (req, res, next) => {
+
+    res.status(200).send(req.body)
+})
+
 
 //*********************************
 //
@@ -104,7 +111,7 @@ app.listen(PORT, function (err) {
     
     }else{
 
-        console.log("== Server listening on port", PORT);
+        console.log("== Server listening on port", PORT)
     }
     
 })
