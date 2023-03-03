@@ -9,7 +9,21 @@
         <th>Birth Date</th>
         <th>Home Base Leader</th>
     </tr>
-    <tr>
+
+    {{#each data}}
+
+        <tr>
+            <td>{{this.crew_members_id}}</td>
+            <td>{{this.first_name}}</td>
+            <td>{{this.last_name}}</td>
+            <td>{{this.birth_country}}</td>
+            <td>{{this.birth_date}}</td>
+            <td>{{this.home_base_lead}}</td>
+        </tr>
+
+    {{/each}}
+
+    {{!-- <tr>
         <td>1</td>
         <td>Angelina</td>
         <td>Sanchez</td>
@@ -32,7 +46,7 @@
         <td>Ukraine</td>
         <td>1975-07-02</td>
         <td></td>
-    </tr>
+    </tr> --}}
 </table>
 
 <div class="flexbox_forms">

@@ -6,7 +6,18 @@
         <th>Name</th>
         <th>Country</th>
     </tr>
-    <tr>
+
+    {{#each data}}
+
+        <tr>
+            <td>{{this.organization_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.country}}</td>
+        </tr>
+
+    {{/each}}
+
+    {{!-- <tr>
         <td>1</td>
         <td>The National Aeronautics and Space Administration</td>
         <td>United States of America</td>
@@ -20,7 +31,7 @@
         <td>3</td>
         <td>The South African National Space Agency</td>
         <td>South Africa</td>
-    </tr>
+    </tr> --}}
 </table>
 
 <div class="flexbox_forms">

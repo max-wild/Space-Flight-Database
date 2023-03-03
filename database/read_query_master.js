@@ -13,12 +13,12 @@ function sql_to_string (relative_dir){
 
 
 var db_read_entities = {
-    'crew_members': '',
-    'external_sites': '',
+    'crew_members': sql_to_string('./read_queries/crew_members_read.sql'),
+    'external_sites': sql_to_string('./read_queries/external_sites_read.sql'),
     'missions': sql_to_string('./read_queries/missions_read.sql'),
-    'organizations': '',
-    'missions_crew_members': '',
-    'missions_external_sites': ''
+    'organizations': sql_to_string('./read_queries/organizations_read.sql'),
+    'missions_crew_members': sql_to_string('./read_queries/mis_c_m_read.sql'),
+    'missions_external_sites': sql_to_string('./read_queries/mis_e_s_read.sql')
 }
 
 function get_read_query(entity_type){
