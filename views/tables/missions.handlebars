@@ -91,9 +91,15 @@
             <label for="organization_select">Organization</label>
             <select name="organization_select">
 
-                <option value="1">The National Aeronautics and Space Administration</option>
+                {{#each organizations}}
+
+                    <option value="{{this.organization_id}}">{{this.name}}</option>
+
+                {{/each}}
+
+                {{!-- <option value="1">The National Aeronautics and Space Administration</option>
                 <option value="2">The Latin American and Caribbean Space Agency</option>
-                <option value="3">The South African National Space Agency</option>
+                <option value="3">The South African National Space Agency</option> --}}
                 
             </select>          
         </div>
@@ -112,10 +118,16 @@
             <label for="mission_select">Mission</label>
             <select name="mission_select">
 
-                <option value="1">Parkinson Investigation</option>
+                {{#each data}}
+
+                    <option value="{{this.mission_id}}">{{this.name}}</option>
+
+                {{/each}}
+
+                {{!-- <option value="1">Parkinson Investigation</option>
                 <option value="2">Life Search on Europa</option>
                 <option value="3">Asteroid Belt Mining</option>
-                <option value="4">Untitled Venus Terraforming Project</option>
+                <option value="4">Untitled Venus Terraforming Project</option> --}}
                 
             </select>
         </div>
@@ -145,9 +157,15 @@
             <label for="organization_select">Organization</label>
             <select name="organization_select">
 
-                <option value="1">The National Aeronautics and Space Administration</option>
+                {{#each organizations}}
+
+                    <option value="{{this.organization_id}}">{{this.name}}</option>
+
+                {{/each}}
+
+                {{!-- <option value="1">The National Aeronautics and Space Administration</option>
                 <option value="2">The Latin American and Caribbean Space Agency</option>
-                <option value="3">The South African National Space Agency</option>
+                <option value="3">The South African National Space Agency</option> --}}
                 
             </select>          
         </div>
@@ -165,10 +183,16 @@
             <label for="mission_select">Mission</label>
             <select name="mission_select">
 
-                <option value="1">Parkinson Investigation</option>
+                {{#each data}}
+
+                    <option value="{{this.mission_id}}">{{this.name}}</option>
+
+                {{/each}}
+
+                {{!-- <option value="1">Parkinson Investigation</option>
                 <option value="2">Life Search on Europa</option>
                 <option value="3">Asteroid Belt Mining</option>
-                <option value="4">Untitled Venus Terraforming Project</option>
+                <option value="4">Untitled Venus Terraforming Project</option> --}}
                 
             </select>
 

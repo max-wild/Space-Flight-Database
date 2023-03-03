@@ -1,3 +1,3 @@
 SELECT org.organization_id, org.name
 
-FROM Organization AS org;
+FROM Organizations AS org;

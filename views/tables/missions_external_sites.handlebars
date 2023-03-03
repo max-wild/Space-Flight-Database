@@ -43,10 +43,16 @@
             <label for="mission_select">Mission</label>
             <select name="mission_select">
 
-                <option value="1">Parkinson Investigation</option>
+                {{#each missions}}
+
+                    <option value="{{this.mission_id}}">{{this.name}}</option>
+
+                {{/each}}
+
+                {{!-- <option value="1">Parkinson Investigation</option>
                 <option value="2">Life Search on Europa</option>
                 <option value="3">Asteroid Belt Mining</option>
-                <option value="4">Untitled Venus Terraforming Project</option>
+                <option value="4">Untitled Venus Terraforming Project</option> --}}
                 
             </select>
 
@@ -57,9 +63,15 @@
             <label for="external_site_select">External Site</label>
             <select name="external_site_select">
 
-                <option value="1">International Space Station</option>
+                {{#each external_sites}}
+
+                    <option value="{{this.external_site_id}}">{{this.name}}</option>
+                
+                {{/each}}
+                
+                {{!-- <option value="1">International Space Station</option>
                 <option value="2">Europa</option>
-                <option value="3">Asteroid Belt</option>
+                <option value="3">Asteroid Belt</option> --}}
                 
             </select>              
         </div>
@@ -80,10 +92,16 @@
             <label for="mission_select">Mission</label>
             <select name="mission_select">
 
-                <option value="1">Parkinson Investigation</option>
+                {{#each missions}}
+
+                    <option value="{{this.mission_id}}">{{this.name}}</option>
+
+                {{/each}}
+
+                {{!-- <option value="1">Parkinson Investigation</option>
                 <option value="2">Life Search on Europa</option>
                 <option value="3">Asteroid Belt Mining</option>
-                <option value="4">Untitled Venus Terraforming Project</option>
+                <option value="4">Untitled Venus Terraforming Project</option> --}}
                 
             </select>
 
@@ -94,10 +112,16 @@
             <label for="external_site_select">External Site</label>
             <select name="external_site_select">
 
-                <option value="1">International Space Station</option>
-                <option value="2">Europa</option>
-                <option value="3">Asteroid Belt</option>
+                {{#each external_sites}}
+
+                    <option value="{{this.external_site_id}}">{{this.name}}</option>
                 
+                {{/each}}
+                
+                {{!-- <option value="1">International Space Station</option>
+                <option value="2">Europa</option>
+                <option value="3">Asteroid Belt</option> --}}
+
             </select>              
         </div>
 
