@@ -9,7 +9,7 @@ var exphbs = require("express-handlebars")
 var util = require('util')
 
 var db = require('./database/db-connector.js')
-const { get_read_query } = require('./database/read_query_master.js')
+const { get_read_query, get_query_name_by_id } = require('./database/read_query_master.js')
 
 const PORT = process.env.PORT || 23374
 var app = express()
@@ -68,7 +68,6 @@ app.get('/:entity', async (req, res, next) => {
     if(db_entities.includes(entity_name)){
 
         var mission_query = get_read_query(entity_name)
-
         var mission_data = await attempt_query(mission_query)
 
         

@@ -1,11 +1,19 @@
-<p>Missions and their Crew Members</p>
+<p>Missions and their External Sites</p>
 
 <table>
     <tr>
         <th>Mission</th>
         <th>External Site</th>
     </tr>
-    <tr>
+
+    {{#each data}}
+        <tr>
+            <td>{{this.mission_name}}</td>
+            <td>{{this.external_site_name}}</td>
+        </tr>
+    {{/each}}
+
+    {{!-- <tr>
         <td>Parkinson Investigation</td>
         <td>International Space Station</td>
     </tr>
@@ -20,7 +28,7 @@
     <tr>
         <td>Asteroid Belt Mining</td>
         <td>International Space Station</td>
-    </tr>
+    </tr> --}}
 </table>
 
 <div class="flexbox_forms">

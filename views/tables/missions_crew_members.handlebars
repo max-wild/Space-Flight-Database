@@ -5,7 +5,15 @@
         <th>Mission</th>
         <th>Crew Member</th>
     </tr>
-    <tr>
+
+    {{#each data}}
+        <tr>
+            <td>{{this.mission_name}}</td>
+            <td>{{this.first_name}} {{this.last_name}}</td>
+        </tr>
+    {{/each}}
+
+    {{!-- <tr>
         <td>Parkinson Investigation</td>
         <td>Angelina Sanchez</td>
     </tr>
@@ -24,7 +32,7 @@
     <tr>
         <td>Asteroid Belt Mining</td>
         <td>Sara Heron</td>
-    </tr>
+    </tr> --}}
 </table>
 
 <div class="flexbox_forms">
