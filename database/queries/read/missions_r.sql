@@ -3,4 +3,4 @@ m.successful_completion, org.name as organization_name
 
 FROM Missions AS m
  
-JOIN Organizations AS org ON m.organization_id = org.organization_id;
+LEFT JOIN Organizations AS org ON m.organization_id = org.organization_id;

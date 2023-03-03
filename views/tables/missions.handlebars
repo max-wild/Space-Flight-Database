@@ -1,6 +1,6 @@
 <p>Mission information</p>
 
-<table>
+<table id="data_table">
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -23,79 +23,45 @@
 
     {{/each}}
 
-{{!--     
-    <tr>
-        <td>1</td>
-        <td>Parkinson Investigation</td>
-        <td class="th_description">A group of astronauts will be sent to the ISS to further observe how Parkinson's
-    disease affects brain cells in a zero-G environment.</td>
-        <td>2026-04-13</td>
-        <td></td>
-        <td>The Latin American and Caribbean Space Agency</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Life Search on Europa</td>
-        <td class="th_description">The core of Europa is warm enough to heat water into liquid form. Scientists will
-    travel to Europa to investigate alien life.</td>
-        <td>2030-02-24</td>
-        <td></td>
-        <td>The National Aeronautics and Space Administration</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>Asteroid Belt Mining</td>
-        <td class="th_description">In the asteroid belt between Mars, a very large deposit of the rare element Astatine
-    been found. An astronaut will lead a robot team to explore.</td>
-        <td>2033-05-05</td>
-        <td></td>
-        <td>The South African National Space Agency</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>Untitled Venus Terraforming Project</td>
-        <td class="th_description"></td>
-        <td>2060-03-12</td>
-        <td></td>
-        <td>The Latin American and Caribbean Space Agency</td>
-    </tr> --}}
 </table>
 
-<div class="flexbox_forms">
+<div class="flexbox_forms" id="add_mission_form">
 
-    <form action="/missions" method="POST">
-        <h3 class="form_title">Add Data</h3>
+    <form >
+        <h3 class="form_title">Add a Mission</h3>
 
         <div class="form_group">
             <label for="name">Name</label>
-            <input required value="" type="text" name="name" id="name"></input>
+            <input required value="" type="text" name="name" id="add_name"></input>
         </div>
 
         <div class="form_group">
             <label for="description">Description</label>
-            <textarea required name="description" id="description"></textarea>
+            <textarea required name="description" id="add_description"></textarea>
         </div>
 
         <div class="form_group">
             <label for="launch_date">Launch Date</label>
-            <input required value="" type="text" name="launch_date" id="launch_date"></input>
+            <input required value="" type="date" name="launch_date" id="add_launch_date"></input>
         </div>
 
         <div class="form_group">
             <label for="successful_completion">Successfully Completed</label>
-            <input type="checkbox" name="successful_completion" id="successful_completion"></input>
+            <input type="checkbox" name="successful_completion" id="add_successful_completion"></input>
         </div>
 
         <div class="form_group">
 
             <label for="organization_select">Organization</label>
-            <select name="organization_select">
+            <select name="organization_select" id="add_organization_select">
 
                 {{#each organizations}}
 
                     <option value="{{this.organization_id}}">{{this.name}}</option>
 
                 {{/each}}
+
+                <option value="-1">No Organization</option>
 
                 {{!-- <option value="1">The National Aeronautics and Space Administration</option>
                 <option value="2">The Latin American and Caribbean Space Agency</option>
@@ -104,13 +70,12 @@
             </select>          
         </div>
 
-        <button type="submit">Add</button>
+        <input type="submit">Add</button>
         <button type="reset">Clear</button>
     </form>
 
-
     <form action="/missions?_method=PUT" method="POST">
-        <h3 class="form_title">Update Data</h3>
+        <h3 class="form_title">Update a Mission</h3>
 
         <p></p>
 
@@ -163,6 +128,8 @@
 
                 {{/each}}
 
+                <option value="-1">No Organization</option>
+
                 {{!-- <option value="1">The National Aeronautics and Space Administration</option>
                 <option value="2">The Latin American and Caribbean Space Agency</option>
                 <option value="3">The South African National Space Agency</option> --}}
@@ -176,7 +143,7 @@
 
 
     <form action="/missions?_method=DELETE" method="POST">
-        <h3 class="form_title">Delete Data</h3>
+        <h3 class="form_title">Delete a Mission</h3>
 
         <div class="form_group">
 
@@ -203,7 +170,7 @@
     </form>
 
     <form action="/missions/search" method="GET">
-        <h3 class="form_title">Search Data</h3>
+        <h3 class="form_title">Search for a Mission</h3>
 
         <p>Search for missions by name:</p>
 
@@ -217,3 +184,6 @@
     </form>
 
 </div>
+
+<script src="/js/add_mission.js"></script>
+<script src="/js/delete_mission.js"></script>
