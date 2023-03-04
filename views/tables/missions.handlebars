@@ -66,18 +66,18 @@
             </select>          
         </div>
 
-        <input type="submit">Add</button>
+        <button type="submit">Add</button>
         <button type="reset">Clear</button>
     </form>
 
-    <form action="/missions?_method=PUT" method="POST">
+    <form id="update_form">
         <h3 class="form_title">Update a Mission</h3>
-
-        <p></p>
 
         <div class="form_group">
             <label for="mission_select">Mission</label>
-            <select name="mission_select" class="entry_select">
+            <select name="mission_select" class="entry_select" id="entry_select_update">
+
+                <option value="-1">Select a Mission</option>
 
                 {{#each data}}
 
@@ -90,28 +90,28 @@
 
         <div class="form_group">
             <label for="name">Name</label>
-            <input value="" type="text" name="name" id="name"></input>
+            <input value="" type="text" name="name" id="update_name"></input>
         </div>
 
         <div class="form_group">
             <label for="description">Description</label>
-            <textarea name="description" id="description"></textarea>
+            <textarea name="description" id="update_description"></textarea>
         </div>
 
         <div class="form_group">
             <label for="launch_date">Launch Date</label>
-            <input value="" type="text" name="launch_date" id="launch_date"></input>
+            <input type="date" name="launch_date" id="update_launch_date"></input>
         </div>
 
         <div class="form_group">
             <label for="successful_completion">Successfully Completed</label>
-            <input type="checkbox" name="successful_completion" id="successful_completion"></input>
+            <input type="checkbox" name="successful_completion" id="update_successful_completion"></input>
         </div>
 
         <div class="form_group">
 
             <label for="organization_select">Organization</label>
-            <select name="organization_select">
+            <select name="organization_select" id="update_organization_select">
 
                 <option value="-1">No Organization</option>
 
@@ -167,5 +167,4 @@
 
 </div>
 
-<script src="/js/add_entity.js"></script>
-<script src="/js/delete_entity.js"></script>
+<script src="/js/entity_CRUD.js"></script>

@@ -10,7 +10,7 @@ var exphbs = require("express-handlebars")
 var util = require('util')
 
 var db = require('./database/db-connector.js')
-const { read_query, read_query_name_by_id } = require('./database/query_master.js')
+const { read_query, read_query_name_by_id, read_query_raw } = require('./database/query_master.js')
 
 const PORT = process.env.PORT || 23374
 var app = express()
@@ -119,6 +119,27 @@ app.get('/:entity', async (req, res, next) => {
     }
 })
 
+
+/**
+*    Returns JSON information about entities, used in the html pages to load data
+*/
+app.get('/entity_json/:entity', async (req, res, next) => {
+
+    var entity_name = req.params.entity.toLowerCase()
+    
+    if(db_entities.includes(entity_name)){
+
+        var entity_data = await attempt_query(read_query_raw(entity_name))
+
+        res.status(200).send(JSON.stringify(entity_data))
+
+    }else{
+
+        next()
+    }
+})
+
+
 /**
 *    POST Request for entities -- sends a CREATE query
 */
@@ -149,6 +170,46 @@ app.post('/add/:entity', async (req, res, next) => {
 
     res.status(200).send(rows)
 })
+
+
+/**
+*    PUT Request for entities -- sends an UPDATE query
+*/
+app.put('/update/:entity', async(req, res, next) => {
+
+    var data = req.body
+
+    // var query_update_missions = `UPDATE Missions ` +
+    // `SET name = IsNull("${data.name}", name), description = IsNull("${data.description}", description), ` +
+    // `launch_date = IsNull("${data.launch_date}", launch_date), successful_completion = ${data.successful_completion}, ` +
+    // `organization_id = ${data.organization_id} ` +
+    // `WHERE mission_id = ${data.mission_id};`
+    var query_update_missions = `UPDATE Missions ` +
+    `SET name = "${data.name}", description = "${data.description}", ` +
+    `launch_date = "${data.launch_date}", successful_completion = ${data.successful_completion}, ` +
+    `organization_id = ${data.organization_id} ` +
+    `WHERE mission_id = ${data.mission_id};`
+  
+    var queryUpdateWorld = `UPDATE bsg_people SET homeworld = ? WHERE bsg_people.id = ?`
+    var selectWorld = `SELECT * FROM bsg_planets WHERE id = ?`
+  
+    try{
+        await attempt_query(query_update_missions)
+    }catch(error){
+        return res.sendStatus(400)
+    }
+
+    try{
+        var rows = await attempt_query(read_query('missions'))
+
+        rows = rows.find(obj => obj.mission_id == data.mission_id)           // Uhhh... for now this is good
+    }catch(error){
+        return res.sendStatus(400)
+    }
+    
+    res.status(200).send(rows)
+})
+
 
 /**
 *    DELETE Request for entities -- sends a DELETE query

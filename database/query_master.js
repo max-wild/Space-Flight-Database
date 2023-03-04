@@ -28,6 +28,7 @@ var db_queries_by_entities = {
     'missions': {
 
         'read': sql_to_string('./queries/read/missions_r.sql'),
+        'read_raw': sql_to_string('./queries/read/missions_raw_r.sql'),
         'read_name_by_id': sql_to_string('./queries/read/name_by_id/missions_by_id.sql')
     }, 
 
@@ -70,41 +71,29 @@ function read_query_name_by_id(entity_type){
     return db_queries_by_entities[entity_type]['read_name_by_id']
 }
 
-function create_query(entity_type, entity_id){
-
-    assert(entity_type in db_queries_by_entities)
-    // assert entity_id is in the database?
-
-    // MAKE the query string based on the passed in ID ... TODO: add parenthesis
-    return db_queries_by_entities[entity_type]['create']
-}
-
 /**
-*    Returns a string sql query that will delete an entity based on ID
+*    Returns a string sql query for reading raw, un-JOIN-ed data from an entity
+*    
+*    (For example, Missions will return with an Organization ID instead of Organization Name)  
 */
-function delete_query(entity_type, id_1){
+function read_query_raw(entity_type){
 
     assert(entity_type in db_queries_by_entities)
 
-
-
-    return db_queries_by_entities[entity_type]['read_name_by_id']
-}
-
-/**
-*    Returns a string sql query that will delete a M:M relationship based on 2 IDs
-*/
-function delete_query(entity_type, id_1, id_2){
-
-    assert(entity_type in db_queries_by_entities)
-
+    if(entity_type === 'missions'){
+        return db_queries_by_entities['missions']['read_raw']
     
+    }else{
 
-    return db_queries_by_entities[entity_type]['read_name_by_id']
+        return db_queries_by_entities[entity_type]['read']
+    }
 }
+
+
 
 module.exports = { 
 
     read_query,
-    read_query_name_by_id
+    read_query_name_by_id,
+    read_query_raw
 }
