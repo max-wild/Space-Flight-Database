@@ -5,6 +5,11 @@
  */
 
 
+// Future checks: Check for uniqueness
+
+// Final todo: organize globals into a section and then comment every function
+
+
 /**
  * 
  *      Setup - define important variable "all_entry_data"
@@ -32,6 +37,47 @@ get_initial_data()
     .then((res) => {all_entry_data = res})
     .catch((err) => {alert('Error: initial data not downloaded:', err)})
 
+var data_table = document.getElementById('data_table')
+const PAGE_ENTITY = data_table.getAttribute('data-entity')
+
+const MISSIONS_TABLE_MAP = [
+
+    'mission_id',
+    'name',
+    'description',
+    'launch_date',
+    'successful_completion',
+    'organization_name'
+]
+
+var table_map               // Table_map
+switch(PAGE_ENTITY){
+
+    case 'missions':
+        table_map = MISSIONS_TABLE_MAP
+        break
+
+    // case 'crew_members':
+    //     table_map = CREW_MEMBERS_TABLE_MAP
+    //      table_map[name] = table_map[first_name] + table_map[last_name]
+    //     break
+    
+    // case 'organizations':
+    //     table_map = ORGANIZATIONS_TABLE_MAP
+    //     break
+
+    // case 'external_sites':
+    //     table_map = EXTERNAL_SITES_TABLE_MAP
+    //     break
+
+    default:
+        alert(`Table map fpr ${PAGE_ENTITY} not set up.`)
+        console.error(`Table map fpr ${PAGE_ENTITY} not set up.`)
+}
+
+const ENTITY_ID_NAME = table_map[0]
+
+
 
 
 /**
@@ -41,37 +87,162 @@ get_initial_data()
  */
 var add_entry_form = document.getElementById('add_form')
 
+function find_label_by_for(input_id) {
+    
+    input_id = input_id.toString()
+    all_labels = document.getElementsByTagName('label')
+
+    for(var i = 0; i < all_labels.length; i++) {
+
+        if (all_labels[i].getAttribute('for') === input_id)
+            return all_labels[i]
+    }
+ }
+
+
+ /**
+  * 
+  * @returns undefined if the forms were not filled out properly, otherwise
+  *         an object a JS object with data from the add forms 
+  */
+function get_add_form_data(){
+
+    // Get all types of input:
+    var add_inputs = add_entry_form.getElementsByTagName('input')
+    var add_textareas = add_entry_form.getElementsByTagName('textarea')
+    var add_selects = add_entry_form.getElementsByTagName('select')
+
+    var add_data = {}
+
+    // Add INPUT information to the add_data object
+    for(var i = 0; i < add_inputs.length; i++){
+
+        var data_type = add_inputs[i].getAttribute('type')
+
+        switch(data_type){
+
+            case 'text':
+
+                // NULL value check:
+                if(add_inputs[i].value === '' || add_inputs[i].value.toUpperCase() === 'NULL'){
+
+                    // Check if we allow NULL values
+                    if(add_inputs[i].hasAttribute('required')){
+
+                        // Don't continue--required condition not met
+                        const label_name = find_label_by_for(add_inputs[i].id).innerText
+
+                        console.warn(`${label_name} is a required value. It must be set.`)
+                        alert(`${label_name} is a required value. It must be set.`)
+                        return
+                    }
+
+                    add_data[add_inputs[i].getAttribute('name')] = null
+                
+                }else{
+
+                    add_data[add_inputs[i].getAttribute('name')] = add_inputs[i].value
+                }
+                break
+
+            case 'date':
+
+                // NULL value check:
+                if(!Date.parse(add_inputs[i].value)){
+
+                    // Check if we allow NULL values
+                    if(add_inputs[i].hasAttribute('required')){
+
+                        // Don't continue--required condition not met
+                        const label_name = find_label_by_for(add_inputs[i].id).innerText
+
+                        console.warn(`${label_name} is a required value. It must be set.`)
+                        alert(`${label_name} is a required value. It must be set.`)
+                        return
+                    }
+
+                    add_data[add_inputs[i].getAttribute('name')] = null
+            
+                }else{
+
+                    add_data[add_inputs[i].getAttribute('name')] = add_inputs[i].value
+                }
+                break
+
+            case 'checkbox':
+                
+                add_data[add_inputs[i].getAttribute('name')] = add_inputs[i].checked
+                break
+
+            default:
+                console.error(add_inputs[i], 'does not have its input type set.')
+        }
+    }
+
+    // Add TEXTAREA information to the add_data object
+    for(var i = 0; i < add_textareas.length; i++){
+
+        // NULL value check:
+        if(add_textareas[i].value === '' || add_textareas[i].value.toUpperCase() === 'NULL'){
+
+            // Check if we allow NULL values
+            if(add_textareas[i].hasAttribute('required')){
+
+                // Don't continue--required condition not met
+                const label_name = find_label_by_for(add_textareas[i].id).innerText
+
+                console.warn(`${label_name} is a required value. It must be set.`)
+                alert(`${label_name} is a required value. It must be set.`)
+                return
+            }
+
+            add_data[add_textareas[i].getAttribute('name')] = null
+                
+        }else{
+
+            add_data[add_textareas[i].getAttribute('name')] = add_textareas[i].value
+        }
+    }
+
+    // Add SELECT information to the add_data object
+    for(var i = 0; i < add_selects.length; i++){
+
+        var select_value = parseInt(add_selects[i].value) || -1
+
+        // NULL value check (NULL select values are -1)
+        if(select_value === -1){
+
+            // Check if we allow NULL values
+            if(add_selects[i].hasAttribute('required')){
+
+                // Don't continue--required condition not met
+                const label_name = find_label_by_for(add_selects[i].id).innerText
+
+                console.warn(`${label_name} is a required value. It must be set.`)
+                alert(`${label_name} is a required value. It must be set.`)
+                return
+            }
+
+            add_data[add_selects[i].getAttribute('name')] = null
+        
+        }else{
+
+            add_data[add_selects[i].getAttribute('name')] = select_value
+        }
+    }
+
+    return add_data
+}
+
+
 add_entry_form.addEventListener('submit', function (e) {
     
     // Stop the form from submitting
     e.preventDefault()
 
-    // Get form fields we need to get data from
-    var input_name = document.getElementById('add_name')
-    var input_desc = document.getElementById('add_description')
-    var input_launch_date = document.getElementById('add_launch_date')
-    var input_succ = document.getElementById('add_successful_completion')
-    var input_org_select = document.getElementById('add_organization_select')
-
-    // Get the values from the form fields
-    var name_val = input_name.value
-    var description_val = input_desc.value
-    var launch_date_val = input_launch_date.value
-    var successful_completion_val = input_succ.checked
-    var organization_id_val = input_org_select.value
-
-    organization_id_val = parseInt(organization_id_val)
-    if(organization_id_val === -1){
-        organization_id_val = 'NULL'
-    }
-
-    // Put our data we want to send in a javascript object
-    var data = {
-        'name': name_val,
-        'description': description_val,
-        'launch_date': launch_date_val,
-        'successful_completion': successful_completion_val,
-        'organization_id': organization_id_val
+    var add_data = get_add_form_data()
+    if(!add_data){
+        return
     }
 
     // Setup our AJAX request
@@ -96,57 +267,44 @@ add_entry_form.addEventListener('submit', function (e) {
     }
 
     // Send the request and wait for the response
-    xhttp.send(JSON.stringify(data))
-
+    xhttp.send(JSON.stringify(add_data))
 })
 
 // Adds the new value to the table
 add_row_to_table = (data) => {
 
-    // Get a reference to the current table on the page and clear it out.
-    var current_table = document.getElementById('data_table')
-
     // Get a reference to the new row from the database query (last object)
     var parsed_data = JSON.parse(data)
     var new_row = parsed_data[parsed_data.length - 1]
 
+    // Add the new entry to the running list
+    all_entry_data.push(new_row)
+
     // Create a row and 4 cells
     var row = document.createElement('TR')
-    var id_cell = document.createElement('TD')
-    var name_cell = document.createElement('TD')
-    var desc_cell = document.createElement('TD')
-    var launch_date_cell = document.createElement('TD')
-    var succ_cell = document.createElement('TD')
-    var org_cell = document.createElement('TD')
 
-    // Fill the cells with correct data
-    id_cell.innerText = new_row.mission_id
-    name_cell.innerText = new_row.name
-    desc_cell.innerText = new_row.description
-    launch_date_cell.innerText = new_row.launch_date
-    succ_cell.innerText = new_row.successful_completion
-    org_cell.innerText = new_row.organization_name
+    // For every entry in the table, create it
+    for(var i = 0; i < table_map.length; i++){
 
-    // Add the cells to the row 
-    row.appendChild(id_cell)
-    row.appendChild(name_cell)
-    row.appendChild(desc_cell)
-    row.appendChild(launch_date_cell)
-    row.appendChild(succ_cell)
-    row.appendChild(org_cell)
-    
-    // Add a row attribute so the deleteRow function can find a newly added row
-    row.setAttribute('data_value', new_row.mission_id)
+        var new_cell = document.createElement('TD')
+        new_cell.innerText = new_row[table_map[i]]
+
+        row.appendChild(new_cell)
+    }
+
+    row.setAttribute('data-id', new_row[ENTITY_ID_NAME])      // Get the id name
 
     // Add the row to the table
-    current_table.appendChild(row)
+    data_table.appendChild(row)
 
     // Now add it to the select elements too
     var entry_selects = document.getElementsByClassName('entry_select')
     for(var i = 0; i < entry_selects.length; i++){
+        
+        // TODO: Implement this for CREW MEMBERS
 
         entry_selects[i].insertAdjacentHTML('beforeend', 
-                                            `<option value="${new_row.mission_id}">${new_row.name}</option>`)
+                                            `<option value="${new_row[ENTITY_ID_NAME]}">${new_row['name']}</option>`)
     }
 }
 
@@ -158,12 +316,58 @@ add_row_to_table = (data) => {
 var update_entry_form = document.getElementById('update_form')
 var select_update = document.getElementById('entry_select_update')
 
+
+/**
+ * Sets the input-element values in the update form based on the
+ * passed-in data 
+ * 
+ * @param {object} selected_entry 
+ */
+function set_update_form_values(selected_entry){
+
+    var update_inputs = update_entry_form.getElementsByTagName('input')
+    var update_textareas = update_entry_form.getElementsByTagName('textarea')
+    var update_selects = update_entry_form.getElementsByTagName('select')
+
+    // Update the INPUTS to match the argument data
+    for(var i = 0; i < update_inputs.length; i++){
+
+        if(update_inputs[i].getAttribute('type') === 'checkbox'){
+
+            update_inputs[i].checked = Boolean(selected_entry[update_inputs[i].getAttribute('name')])
+        
+        }else{
+
+            update_inputs[i].value = selected_entry[update_inputs[i].getAttribute('name')]
+        }
+    }
+
+    // Update the TEXTAREAS to match the argument data
+    for(var i = 0; i < update_textareas.length; i++){
+
+        update_textareas[i].value = selected_entry[update_textareas[i].getAttribute('name')]
+    }
+
+    // Update the SELECTS to match the argument data
+    for(var i = 0; i < update_selects.length; i++){
+
+        // Skip the select that is for selecting entity entries
+        if(update_selects[i].classList.contains('entry_select')){
+
+            continue
+        }
+
+        update_selects[i].value = selected_entry[update_selects[i].getAttribute('name')]
+    }
+}
+
+
 /** 
  * Change the update-boxes when a new value is selected
  */
 select_update.addEventListener('change', (e) => {
 
-    new_id_value = select_update.value
+    new_id_value = parseInt(select_update.value)
 
     if(new_id_value == -1){     // No entry selected
 
@@ -175,13 +379,9 @@ select_update.addEventListener('change', (e) => {
         return
 
     // Otherwise, fill the data in corresponding to the id
-    var selected_entry = (all_entry_data.find(obj => obj.mission_id == new_id_value))
+    var selected_entry = (all_entry_data.find(obj => obj[ENTITY_ID_NAME] === new_id_value))
 
-    document.getElementById('update_name').value = selected_entry.name
-    document.getElementById('update_description').value = selected_entry.description
-    document.getElementById('update_launch_date').value = selected_entry.launch_date
-    document.getElementById('update_successful_completion').checked = Boolean(selected_entry.successful_completion)
-    document.getElementById('update_organization_select').value = selected_entry.organization_id
+    set_update_form_values(selected_entry)
 })
 
 
@@ -196,7 +396,9 @@ update_entry_form.addEventListener('submit', function (e) {
         return
 
     // get form fields
-    var input_id = select_update.value
+    var input_id = select_update.value          // Add this AFTER CONSTRUCTING THE DATA??
+
+
     var input_name = document.getElementById('update_name').value
     var input_desc = document.getElementById('update_description').value
     var input_launch_date = document.getElementById('update_launch_date').value
@@ -248,16 +450,22 @@ update_entry_form.addEventListener('submit', function (e) {
 
 function update_row(data, entry_id){
 
-    var parsed_data = JSON.parse(data)
 
-    var table = document.getElementById('data_table')
-    var table_rows = table.getElementsByTagName('tr')
+    var parsed_data = JSON.parse(data)
+    var entry_id = parseInt(entry_id)
+
+    // Update the running list of entries
+    const idx_update = all_entry_data.findIndex(obj => obj.mission_id === entry_id)
+    all_entry_data[idx_update] = parsed_data
+
+    // Update table
+    var table_rows = data_table.getElementsByTagName('tr')
 
     for (var i = 1; i < table_rows.length; i++) {
 
         // iterate through rows
         // rows would be accessed using the "row" variable assigned in the for loop
-        if (table_rows[i].getAttribute('data_value') == entry_id) {
+        if (parseInt(table_rows[i].getAttribute('data-id')) === entry_id) {
 
             // Get td of homeworld value
             table_rows[i].getElementsByTagName('td')[1].innerText = parsed_data.name
@@ -265,6 +473,8 @@ function update_row(data, entry_id){
             table_rows[i].getElementsByTagName('td')[3].innerText = parsed_data.launch_date
             table_rows[i].getElementsByTagName('td')[4].innerText = parsed_data.successful_completion
             table_rows[i].getElementsByTagName('td')[5].innerText = parsed_data.organization_name
+
+            break
         }
     }
 }
@@ -300,7 +510,7 @@ delete_entry_form.addEventListener('submit', function (e) {
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest()
-    xhttp.open('DELETE', '/delete/missions', true)
+    xhttp.open('DELETE', '/delete/' + PAGE_ENTITY, true)
     xhttp.setRequestHeader('Content-type', 'application/json')
 
     // Tell our AJAX request how to resolve
@@ -324,13 +534,17 @@ delete_entry_form.addEventListener('submit', function (e) {
 
 function delete_row(entry_id){
 
-    var table = document.getElementById('data_table')
-    for (var i = 0, row; row = table.rows[i]; i++) {
+    // Delete the entry from the running list
+    const idx_delete = all_entry_data.findIndex(obj => obj[ENTITY_ID_NAME] === entry_id)
+    all_entry_data.splice(idx_delete, 1)
+
+    // Delete from table
+    for (var i = 0, row; row = data_table.rows[i]; i++) {
         // Iterate through rows
         // Rows would be accessed using the 'row' variable assigned in the for loop
-        if (table.rows[i].getAttribute('data_value') == entry_id) {
+        if (data_table.rows[i].getAttribute('data-id') == entry_id) {
 
-            table.deleteRow(i)
+            data_table.deleteRow(i)
             break
         }
     }
@@ -339,7 +553,7 @@ function delete_row(entry_id){
     var entry_selects = document.getElementsByClassName('entry_select')
     for(var j = 0; j < entry_selects.length; j++){
 
-        // For every option in the drop down:
+        // Delete the option in the drop down:
         for(var opt_index = 0; opt_index < entry_selects[j].length; opt_index++){
 
             if(entry_selects[j].options[opt_index].value == entry_id){

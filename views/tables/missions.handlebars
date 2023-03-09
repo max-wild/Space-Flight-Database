@@ -1,6 +1,6 @@
 <p>Mission information</p>
 
-<table id="data_table">
+<table id="data_table" data-entity="missions">
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -12,7 +12,7 @@
 
     {{#each data}}
 
-        <tr data_value="{{this.mission_id}}">
+        <tr data-id="{{this.mission_id}}">
             <td>{{this.mission_id}}</td>
             <td>{{this.name}}</td>
             <td class="th_longer">{{this.description}}</td>
@@ -31,29 +31,29 @@
         <h3 class="form_title">Add a Mission</h3>
 
         <div class="form_group">
-            <label for="name">Name</label>
+            <label for="add_name">Name</label>
             <input required value="" type="text" name="name" id="add_name"></input>
         </div>
 
         <div class="form_group">
-            <label for="description">Description</label>
+            <label for="add_description">Description</label>
             <textarea required name="description" id="add_description"></textarea>
         </div>
 
         <div class="form_group">
-            <label for="launch_date">Launch Date</label>
-            <input required value="" type="date" name="launch_date" id="add_launch_date"></input>
+            <label for="add_launch_date">Launch Date</label>
+            <input value="" type="date" name="launch_date" id="add_launch_date"></input>
         </div>
 
         <div class="form_group">
-            <label for="successful_completion">Successfully Completed</label>
+            <label for="add_successful_completion">Successfully Completed</label>
             <input type="checkbox" name="successful_completion" id="add_successful_completion"></input>
         </div>
 
         <div class="form_group">
 
-            <label for="organization_select">Organization</label>
-            <select name="organization_select" id="add_organization_select">
+            <label for="add_organization_select">Organization</label>
+            <select name="organization_id" id="add_organization_select">
 
                 <option value="-1">No Organization</option>
 
@@ -74,7 +74,7 @@
         <h3 class="form_title">Update a Mission</h3>
 
         <div class="form_group">
-            <label for="mission_select">Mission</label>
+            <label for="entry_select_update">Mission</label>
             <select name="mission_select" class="entry_select" id="entry_select_update">
 
                 <option value="-1">Select a Mission</option>
@@ -89,29 +89,29 @@
         </div>
 
         <div class="form_group">
-            <label for="name">Name</label>
-            <input value="" type="text" name="name" id="update_name"></input>
+            <label for="update_name">Name</label>
+            <input required value="" type="text" name="name" id="update_name"></input>
         </div>
 
         <div class="form_group">
-            <label for="description">Description</label>
+            <label for="update_description">Description</label>
             <textarea name="description" id="update_description"></textarea>
         </div>
 
         <div class="form_group">
-            <label for="launch_date">Launch Date</label>
+            <label for="update_launch_date">Launch Date</label>
             <input type="date" name="launch_date" id="update_launch_date"></input>
         </div>
 
         <div class="form_group">
-            <label for="successful_completion">Successfully Completed</label>
+            <label for="update_successful_completion">Successfully Completed</label>
             <input type="checkbox" name="successful_completion" id="update_successful_completion"></input>
         </div>
 
         <div class="form_group">
 
-            <label for="organization_select">Organization</label>
-            <select name="organization_select" id="update_organization_select">
+            <label for="update_organization_select">Organization</label>
+            <select name="organization_id" id="update_organization_select">
 
                 <option value="-1">No Organization</option>
 
@@ -134,7 +134,7 @@
 
         <div class="form_group">
 
-            <label for="mission_select">Mission</label>
+            <label for="delete_select">Mission</label>
             <select name="mission_select" id="delete_select" class="entry_select">
 
                 {{#each data}}
@@ -157,8 +157,8 @@
         <p>Search for missions by name:</p>
 
         <div class="form_group">
-            <label for="name">Name</label>
-            <input value="" type="text" name="name" id="name"></input>
+            <label for="search_name">Name</label>
+            <input value="" type="text" name="name" id="search_name"></input>
         </div>
 
         <button type="submit">Search</button>
