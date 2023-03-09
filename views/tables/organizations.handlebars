@@ -1,6 +1,6 @@
 <p>Organizations information</p>
 
-<table>
+<table id="data_table" data-entity="organizations">
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -11,42 +11,27 @@
 
         <tr data-id="{{this.organization_id}}">
             <td>{{this.organization_id}}</td>
-            <td>{{this.name}}</td>
+            <td class="th_longer">{{this.name}}</td>
             <td>{{this.country}}</td>
         </tr>
 
     {{/each}}
 
-    {{!-- <tr>
-        <td>1</td>
-        <td>The National Aeronautics and Space Administration</td>
-        <td>United States of America</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>The Latin American and Caribbean Space Agency</td>
-        <td>Mexico</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>The South African National Space Agency</td>
-        <td>South Africa</td>
-    </tr> --}}
 </table>
 
 <div class="flexbox_forms">
 
-    <form action="/organizations" method="POST">
+    <form id="add_form">
         <h3 class="form_title">Add an Organization</h3>
 
         <div class="form_group">
-            <label for="name">Name</label>
-            <input required value="" type="text" name="name" id="name"></input>
+            <label for="add_name">Name</label>
+            <input required value="" type="text" name="name" id="add_name"></input>
         </div>
 
         <div class="form_group">
-            <label for="country">Country</label>
-            <input required type="text" name="country" id="country"></textarea>
+            <label for="add_country">Country</label>
+            <input required type="text" name="country" id="add_country"></input>
         </div>
 
         <button type="submit">Add</button>
@@ -54,31 +39,33 @@
     </form>
 
 
-    <form action="/organizations?_method=PUT" method="POST">
+    <form id="update_form">
         <h3 class="form_title">Update an Organization</h3>
-
-        <p>Identify the ID, and leave any fields which you don't wish to update blank.</p>
 
         <div class="form_group">
 
-            <label for="organization_select">Organization</label>
-            <select name="organization_select">
+            <label for="entry_select_update">Organization</label>
+            <select name="organization_select" class="entry_select" id="entry_select_update">
 
-                <option value="1">The National Aeronautics and Space Administration</option>
-                <option value="2">The Latin American and Caribbean Space Agency</option>
-                <option value="3">The South African National Space Agency</option>
+                <option value="-1">Select an Organization</option>
+
+                {{#each data}}
+
+                    <option value="{{this.organization_id}}">{{this.name}}</option>
+
+                {{/each}}
                 
             </select>          
         </div>
 
         <div class="form_group">
-            <label for="name">Name</label>
-            <input value="" type="text" name="name" id="name"></input>
+            <label for="update_name">Name</label>
+            <input required value="" type="text" name="name" id="update_name"></input>
         </div>
 
         <div class="form_group">
-            <label for="country">Country</label>
-            <input value="" type="text" name="country" id="country"></textarea>
+            <label for="update_country">Country</label>
+            <input required value="" type="text" name="country" id="update_country"></input>
         </div>
 
         <button type="submit">Update</button>
@@ -86,17 +73,19 @@
     </form>
 
 
-    <form action="/organizations?_method=DELETE" method="POST">
+    <form id="delete_form">
         <h3 class="form_title">Delete an Organization</h3>
 
         <div class="form_group">
 
-            <label for="organization_select">Organization</label>
-            <select name="organization_select">
+            <label for="delete_select">Organization</label>
+            <select name="organization_select" id="delete_select" class="entry_select">
 
-                <option value="1">The National Aeronautics and Space Administration</option>
-                <option value="2">The Latin American and Caribbean Space Agency</option>
-                <option value="3">The South African National Space Agency</option>
+                {{#each data}}
+
+                    <option value="{{this.organization_id}}">{{this.name}}</option>
+
+                {{/each}}
                 
             </select>          
         </div>
@@ -106,3 +95,5 @@
     </form>
 
 </div>
+
+<script src="/js/entity_CRUD.js"></script>

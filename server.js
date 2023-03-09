@@ -4,13 +4,16 @@
 //
 //*********************************
 
+const { table } = require("console")
 const { query } = require("express")
 var express = require("express")
 var exphbs = require("express-handlebars")
 var util = require('util')
 
 var db = require('./database/db-connector.js')
-const { read_query, read_query_name_by_id, read_query_raw } = require('./database/query_master.js')
+const { read_query, read_query_name_by_id, 
+    read_query_raw, create_query, 
+    update_query, delete_queries } = require('./database/query_master.js')
 
 const PORT = process.env.PORT || 23374
 var app = express()
@@ -21,6 +24,24 @@ app.engine('handlebars', exphbs.engine({
     'defaultLayout': 'main'  // Referencing views/layouts/main.handlebars
 }))   
 app.set('view engine', 'handlebars')
+
+
+const DB_TABLES = [
+    'crew_members',
+    'external_sites',
+    'missions',
+    'organizations',
+    'missions_crew_members',
+    'missions_external_sites'
+]
+
+const TABLE_TO_ID = {
+
+    'crew_members': 'crew_member_id',
+    'external_sites': 'external_site_id',
+    'missions': 'mission_id',
+    'organizations': 'organization_id'
+}
 
 
 app.use(express.json())
@@ -34,20 +55,95 @@ const db_query = util.promisify(db.pool.query).bind(db.pool)
 /**
 *    Makes an asynchronous query attempt on the SQL database
 */
-async function attempt_query(attempted_query){
+async function attempt_query(attempted_query) {
 
     try{
 
         var result = await db_query(attempted_query)
         return result
 
-    }catch (error){
+    }catch (error) {
 
         console.log('Error:', error)
         throw error
     }
 }
 
+
+/**
+ * Gets the data from a table in the SQL database using read queries
+ * 
+ * @param {String} table_name 
+ * @returns a JS object with data taken from READ queries on the database.
+ */
+async function get_read_query_data(table_name) {
+
+    try{
+        var entity_data = await attempt_query(read_query(table_name))
+    }catch (error) {
+        throw error
+    }
+    
+    var handlebars_data = {'data': entity_data}
+
+    // missions, missions_crew_members, and missions_external_sites need additional information
+    if (table_name === 'missions') {
+
+        var organizations_query = read_query_name_by_id('organizations')
+
+        try{
+            var organizations_data = await attempt_query(organizations_query)
+        }catch (error) {
+            throw error
+        }
+
+        handlebars_data['organizations'] = organizations_data
+    }
+
+    if (table_name === 'missions_crew_members') {
+
+        // Read missions
+        var missions_query = read_query_name_by_id('missions')
+        try{
+            var missions_data = await attempt_query(missions_query)
+        }catch (error) {
+            throw error
+        }
+        handlebars_data['missions'] = missions_data
+
+        // Read crew members
+        var crew_members_query = read_query_name_by_id('crew_members')
+        try{
+            var crew_members_data = await attempt_query(crew_members_query)
+        }catch (error) {
+            throw error
+        }
+        handlebars_data['crew_members'] = crew_members_data
+    }
+
+    if (table_name === 'missions_external_sites') {
+
+        // Read missions
+        var missions_query = read_query_name_by_id('missions')
+        try{
+            var missions_data = await attempt_query(missions_query)
+        }catch (error) {
+            throw error
+        }
+        handlebars_data['missions'] = missions_data
+
+        // Read external sites
+        var external_sites_query = read_query_name_by_id('external_sites')
+        try{
+            var external_sites_data = await attempt_query(external_sites_query)
+        }catch (error){
+            throw error
+        }
+        handlebars_data['external_sites'] = external_sites_data
+    }
+
+    return handlebars_data
+}
 
 
 //*********************************
@@ -56,15 +152,6 @@ async function attempt_query(attempted_query){
 //
 //*********************************
 
-var db_entities = [
-    'crew_members',
-    'external_sites',
-    'missions',
-    'organizations',
-    'missions_crew_members',
-    'missions_external_sites'
-]
-
 /**
 *    GET Request for entities -- sends a READ query
 */
@@ -72,70 +159,41 @@ app.get('/:entity', async (req, res, next) => {
 
     var entity_name = req.params.entity.toLowerCase()
 
-    if(db_entities.includes(entity_name)){
+    if (!DB_TABLES.includes(entity_name)) {
 
-        var entity_data = await attempt_query(read_query(entity_name))
-
-        // TODO: Create a setup_handlebars_data function, to load the read data
-        var handlebars_data = {data: entity_data}
-
-        // missions, missions_crew_members, and missions_external_sites need additional information
-        if(entity_name === 'missions'){
-
-            var organizations_query = read_query_name_by_id('organizations')
-            var organizations_data = await attempt_query(organizations_query)
-
-            handlebars_data['organizations'] = organizations_data
-        }
-
-        if(entity_name === 'missions_crew_members'){
-
-            var missions_query = read_query_name_by_id('missions')
-            var missions_data = await attempt_query(missions_query)
-            handlebars_data['missions'] = missions_data
-
-            var crew_members_query = read_query_name_by_id('crew_members')
-            var crew_members_data = await attempt_query(crew_members_query)
-            handlebars_data['crew_members'] = crew_members_data
-        }
-
-        if(entity_name === 'missions_external_sites'){
-
-            var missions_query = read_query_name_by_id('missions')
-            var missions_data = await attempt_query(missions_query)
-            handlebars_data['missions'] = missions_data
-
-            var external_sites_query = read_query_name_by_id('external_sites')
-            var external_sites_data = await attempt_query(external_sites_query)
-            handlebars_data['external_sites'] = external_sites_data
-        }
-
-        // Renders views/tables/[entity].handlebars with "handlebars_data" passed in
-        res.status(200).render('tables/' + entity_name, handlebars_data)  
-    
-    }else{
-
-        next()
+        return next()
     }
+
+    try{
+        var handlebars_data = await get_read_query_data(entity_name)
+    }catch (error){
+        res.sendStatus(500)
+    }
+
+    // Renders views/tables/[entity].handlebars with "handlebars_data" passed in
+    res.status(200).render('tables/' + entity_name, handlebars_data)  
 })
 
 
 /**
-*    Returns JSON information about entities, used in the html pages to load data
+*    Returns JSON information about entities, used in the html pages to autofill data
 */
 app.get('/entity_json/:entity', async (req, res, next) => {
 
     var entity_name = req.params.entity.toLowerCase()
-    
-    if(db_entities.includes(entity_name)){
 
+    if (!DB_TABLES.includes(entity_name)) {
+    
+        return next()
+    }
+
+    try{
         var entity_data = await attempt_query(read_query_raw(entity_name))
 
         res.status(200).send(JSON.stringify(entity_data))
 
-    }else{
-
-        next()
+    }catch (error){
+        return res.sendStatus(500)
     }
 })
 
@@ -145,27 +203,27 @@ app.get('/entity_json/:entity', async (req, res, next) => {
 */
 app.post('/add/:entity', async (req, res, next) => {
 
-    // Capture the incoming data and parse it back to a JS object
-    var data = req.body
+    var entity_name = req.params.entity.toLowerCase()
 
-    var succ = data.successful_completion.toString().toUpperCase()
+    if (!DB_TABLES.includes(entity_name)) {
 
-    // Create the query and run it on the database
-    query1 = `INSERT INTO Missions (name, description, launch_date, successful_completion, organization_id)` +
-    ` VALUES ('${data.name}', '${data.description}', '${data.launch_date}', ${succ}, ${data.organization_id})`
+        return next()
+    }
+
+    var query_read_table = create_query(entity_name, req.body)
 
     // Send in the new data
     try{
-        await attempt_query(query1)
-    }catch(error){
-        return res.sendStatus(400)
+        await attempt_query(query_read_table)
+    }catch (error) {
+        return res.sendStatus(500)
     }
 
     // Return a confirmation of the new data
     try{
-        var rows = await attempt_query(read_query('missions'))
-    }catch(error){
-        return res.sendStatus(400)
+        var rows = await attempt_query(read_query(entity_name))
+    }catch (error) {
+        return res.sendStatus(500)
     }
 
     res.status(200).send(rows)
@@ -177,34 +235,32 @@ app.post('/add/:entity', async (req, res, next) => {
 */
 app.put('/update/:entity', async(req, res, next) => {
 
-    var data = req.body
+    var entity_name = req.params.entity.toLowerCase()
+    var entry_id = req.body[TABLE_TO_ID[entity_name]]
 
-    // var query_update_missions = `UPDATE Missions ` +
-    // `SET name = IsNull("${data.name}", name), description = IsNull("${data.description}", description), ` +
-    // `launch_date = IsNull("${data.launch_date}", launch_date), successful_completion = ${data.successful_completion}, ` +
-    // `organization_id = ${data.organization_id} ` +
-    // `WHERE mission_id = ${data.mission_id};`
-    var query_update_missions = `UPDATE Missions ` +
-    `SET name = "${data.name}", description = "${data.description}", ` +
-    `launch_date = "${data.launch_date}", successful_completion = ${data.successful_completion}, ` +
-    `organization_id = ${data.organization_id} ` +
-    `WHERE mission_id = ${data.mission_id};`
-  
-    var queryUpdateWorld = `UPDATE bsg_people SET homeworld = ? WHERE bsg_people.id = ?`
-    var selectWorld = `SELECT * FROM bsg_planets WHERE id = ?`
-  
+    console.log('Req.body is:', req.body)
+
+    if (!DB_TABLES.includes(entity_name)) {
+
+        return next()
+    }
+
+    var query_update_table = update_query(entity_name, req.body)
+
     try{
-        await attempt_query(query_update_missions)
-    }catch(error){
-        return res.sendStatus(400)
+        await attempt_query(query_update_table)
+    }catch (error) {
+        return res.sendStatus(500)
     }
 
     try{
-        var rows = await attempt_query(read_query('missions'))
+        var rows = await attempt_query(read_query(entity_name))
 
-        rows = rows.find(obj => obj.mission_id == data.mission_id)           // Uhhh... for now this is good
-    }catch(error){
-        return res.sendStatus(400)
+        // TODO: This won't work for intersection tables
+        rows = rows.find(obj => obj[TABLE_TO_ID[entity_name]] === entry_id)           
+
+    }catch (error) {
+        return res.sendStatus(500)
     }
     
     res.status(200).send(rows)
@@ -216,33 +272,26 @@ app.put('/update/:entity', async(req, res, next) => {
 */
 app.delete('/delete/:entity', async (req, res, next) => {
 
-    var data = req.body
-    var delete_entry_id = parseInt(data.id)
+    var entity_name = req.params.entity.toLowerCase()
 
-    var delete_Missions_External_Sites = `DELETE FROM Missions_External_Sites WHERE mission_id = ${delete_entry_id}`
-    var delete_Missions_Crew_Members = `DELETE FROM Missions_Crew_Members WHERE mission_id = ${delete_entry_id}`
-    var delete_missions= `DELETE FROM Missions WHERE mission_id = ${delete_entry_id}`
-  
-    try{
-        await attempt_query(delete_Missions_External_Sites)
-    }catch(error){
-        return res.sendStatus(400)
+    if (!DB_TABLES.includes(entity_name)) {
+
+        return next()
     }
 
-    try{
-        await attempt_query(delete_Missions_Crew_Members)
-    }catch(error){
-        return res.sendStatus(400)
-    }
+    // There may be multiple queries if extra data must be deleted from intersection tables
+    var table_delete_queries = delete_queries(entity_name, req.body)
 
-    try{
-        await attempt_query(delete_missions)
-    }catch(error){
-        return res.sendStatus(400)
+    for (var i = 0; i < table_delete_queries.length; i++){
+
+        try{
+            await attempt_query(table_delete_queries[i])
+        }catch (error) {
+            return res.sendStatus(500)
+        }
     }
 
     return res.sendStatus(204)
-
 })
 
 /**
