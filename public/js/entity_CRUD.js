@@ -5,9 +5,15 @@
  */
 
 
-// Future checks: Check for uniqueness
+// Outline of tasks left:
 
-// Final todo: organize globals into a section and then comment every function
+// 1. Complete UPDATE crud automation
+// 2. Format this .js file for readability--organize globals into a section
+//      and comment every fuction
+//          2a. Write a header to describe functionality of this file
+// 3. Provide Checks for Uniqueness
+// 4. Set up updating with null values
+
 
 
 /**
@@ -478,15 +484,6 @@ function update_row(data, entry_id){
         }
     }
 }
-
-// First TODO: SET UP UPDATING WITH NULL VALUES
-// First TODO: SET UP UPDATING WITH NULL VALUES
-// First TODO: SET UP UPDATING WITH NULL VALUES
-// First TODO: SET UP UPDATING WITH NULL VALUES
-
-// Then todo: Make updating / creating / deleting then delete the preloaded initial data
-
-
 
 
 /**
