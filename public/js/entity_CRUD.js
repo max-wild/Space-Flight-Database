@@ -54,6 +54,23 @@ get_initial_data()
     .then((res) => {all_entry_data = res})
     .catch((err) => {alert('Error: initial data not downloaded:', err)})
 
+const CREW_MEMBERS_TABLE_MAP = [
+
+    'crew_member_id',
+    'first_name',
+    'last_name',
+    'birth_country',
+    'birth_date',
+    'home_base_lead'
+]
+
+const EXTERNAL_SITES_TABLE_MAP = [
+
+    'external_site_id',
+    'name',
+    'dist_from_earth'
+]
+
 const MISSIONS_TABLE_MAP = [
 
     'mission_id',
@@ -78,17 +95,17 @@ switch (PAGE_ENTITY) {
         table_map = MISSIONS_TABLE_MAP
         break
 
-    // case 'crew_members':
-    //     table_map = CREW_MEMBERS_TABLE_MAP
-    //     break
+    case 'crew_members':
+        table_map = CREW_MEMBERS_TABLE_MAP
+        break
     
     case 'organizations':
         table_map = ORGANIZATIONS_TABLE_MAP
         break
 
-    // case 'external_sites':
-    //     table_map = EXTERNAL_SITES_TABLE_MAP
-    //     break
+    case 'external_sites':
+        table_map = EXTERNAL_SITES_TABLE_MAP
+        break
 
     default:
         alert(`Table map for ${PAGE_ENTITY} not set up.`)
@@ -100,8 +117,10 @@ const ENTITY_ID_NAME = table_map[0]     // This variable exists because each ent
 
 var add_entry_form = document.getElementById('add_form')
 var update_entry_form = document.getElementById('update_form')
-var select_update = document.getElementById('entry_select_update')
 var delete_entry_form = document.getElementById('delete_form')
+
+var select_update = document.getElementById('entry_select_update')
+var select_delete = document.getElementById('entry_select_delete')
 
 
 /**
@@ -234,6 +253,19 @@ function get_form_data(form_type) {
             case 'checkbox':
                 
                 form_data[form_inputs[i].getAttribute('name')] = form_inputs[i].checked
+                break
+
+            case 'number':
+                // NULL value check:
+                if (!form_inputs[i].value) {
+
+                    // Don't need to worry about checking for 'required' for 'number' because
+                    // otherwise the form wouldn't be able to be sent
+                    form_data[form_inputs[i].getAttribute('name')] = null
+                }else{
+
+                    form_data[form_inputs[i].getAttribute('name')] = form_inputs[i].value
+                }
                 break
 
             default:
@@ -413,6 +445,16 @@ function set_update_form_values(selected_entry) {
 
             update_inputs[i].checked = Boolean(selected_entry[update_inputs[i].getAttribute('name')])
         
+        }else if (update_inputs[i].getAttribute('type') === 'number') {
+
+            // Remove commas if the number has them
+            var number_value = selected_entry[update_inputs[i].getAttribute('name')]
+            if (typeof number_value === 'string'){
+
+                number_value = parseInt(number_value.replaceAll(',', ''))
+            }
+            update_inputs[i].value = number_value
+        
         }else{
 
             update_inputs[i].value = selected_entry[update_inputs[i].getAttribute('name')]
@@ -571,7 +613,11 @@ delete_entry_form.addEventListener('submit', function (e) {
     // Stop the form from submitting
     e.preventDefault()
 
-    var delete_id = parseInt(document.getElementById('delete_select').value)
+    var delete_id = parseInt(select_delete.value)
+
+    if (delete_id === -1)       // This is the "no selection" value
+        return
+
     var data = {
         id: delete_id
     }

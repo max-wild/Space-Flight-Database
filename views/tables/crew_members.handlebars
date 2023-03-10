@@ -1,6 +1,6 @@
 <p>Crew Members information</p>
 
-<table>
+<table id="data_table" data-entity="crew_members">
     <tr>
         <th>ID</th>
         <th>First Name</th>
@@ -23,60 +23,36 @@
 
     {{/each}}
 
-    {{!-- <tr>
-        <td>1</td>
-        <td>Angelina</td>
-        <td>Sanchez</td>
-        <td>United States of America</td>
-        <td>1992-01-19</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Abubakar</td>
-        <td>Ajayi</td>
-        <td>United States of America</td>
-        <td>1976-11-20</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>Sara</td>
-        <td>Heron</td>
-        <td>Ukraine</td>
-        <td>1975-07-02</td>
-        <td></td>
-    </tr> --}}
 </table>
 
 <div class="flexbox_forms">
 
-    <form action="/crew_members" method="POST">
+    <form id="add_form">
         <h3 class="form_title">Add a Crew Member</h3>
 
         <div class="form_group">
-            <label for="first_name">First Name</label>
-            <input required value="" type="text" name="first_name" id="first_name"></input>
+            <label for="add_first_name">First Name</label>
+            <input value="" type="text" name="first_name" id="add_first_name"></input>
         </div>
 
         <div class="form_group">
-            <label for="last_name">Last Name</label>
-            <input required value="" type="text" name="last_name" id="last_name"></input>
+            <label for="add_last_name">Last Name</label>
+            <input required value="" type="text" name="last_name" id="add_last_name"></input>
         </div>
 
         <div class="form_group">
-            <label for="birth_country">Country of Birth</label>
-            <input required value="" type="text" name="birth_country" id="birth_country"></input>
+            <label for="add_birth_country">Country of Birth</label>
+            <input value="" type="text" name="birth_country" id="add_birth_country"></input>
         </div>
 
         <div class="form_group">
-            <label for="birth_date">Birth Date</label>
-            <input required value="" type="date" name="birth_date" id="birth_date"></input>
+            <label for="add_birth_date">Birth Date</label>
+            <input value="" type="date" name="birth_date" id="add_birth_date"></input>
         </div>
 
         <div class="form_group">
-            <label for="home_base_lead">Home Base Leader</label>
-            <input value="" type="checkbox" name="home_base_lead" id="home_base_lead"></input>
+            <label for="add_home_base_lead">Home Base Leader</label>
+            <input value="" type="checkbox" name="home_base_lead" id="add_home_base_lead"></input>
         </div>
 
         <button type="submit">Add</button>
@@ -84,13 +60,15 @@
     </form>
 
 
-    <form action="/crew_members?_method=PUT" method="POST">
+    <form id="update_form">
         <h3 class="form_title">Update a Crew Member</h3>
 
         <div class="form_group">
 
-            <label for="crew_member_select">Crew Member</label>
-            <select name="crew_member_select">
+            <label for="entry_select_update">Crew Member</label>
+            <select name="crew_member_select" class="entry_select" id="entry_select_update">
+
+                <option value="-1">Select a Crew Member</option>
 
                 {{#each data}}
 
@@ -102,28 +80,28 @@
         </div>
 
         <div class="form_group">
-            <label for="first_name">First Name</label>
-            <input value="" type="text" name="first_name" id="first_name"></input>
+            <label for="update_first_name">First Name</label>
+            <input value="" type="text" name="first_name" id="update_first_name"></input>
         </div>
 
         <div class="form_group">
-            <label for="last_name">Last Name</label>
-            <input value="" type="text" name="last_name" id="last_name"></input>
+            <label for="update_last_name">Last Name</label>
+            <input required value="" type="text" name="last_name" id="update_last_name"></input>
         </div>
 
         <div class="form_group">
-            <label for="birth_country">Country of Birth</label>
-            <input value="" type="text" name="birth_country" id="birth_country"></input>
+            <label for="update_birth_country">Country of Birth</label>
+            <input value="" type="text" name="birth_country" id="update_birth_country"></input>
         </div>
 
         <div class="form_group">
-            <label for="birth_date">Birth Date</label>
-            <input value="" type="date" name="birth_date" id="birth_date"></input>
+            <label for="update_birth_date">Birth Date</label>
+            <input value="" type="date" name="birth_date" id="update_birth_date"></input>
         </div>
 
         <div class="form_group">
-            <label for="home_base_lead">Home Base Leader</label>
-            <input value="" type="checkbox" name="home_base_lead" id="home_base_lead"></input>
+            <label for="update_home_base_lead">Home Base Leader</label>
+            <input value="" type="checkbox" name="home_base_lead" id="update_home_base_lead"></input>
         </div>
 
         <button type="submit">Update</button>
@@ -131,13 +109,15 @@
     </form>
 
 
-    <form action="/crew_members?_method=DELETE" method="POST">
+    <form id="delete_form">
         <h3 class="form_title">Delete a Crew Member</h3>
 
         <div class="form_group">
 
-            <label for="crew_member_select">Crew Member</label>
-            <select name="crew_member_select">
+            <label for="entry_select_delete">Crew Member</label>
+            <select name="crew_member_select" id="entry_select_delete" class="entry_select">
+
+                <option value="-1">Select a Crew Member</option>
 
                 {{#each data}}
 
@@ -154,3 +134,5 @@
     </form>
 
 </div>
+
+<script src="/js/entity_CRUD.js"></script>

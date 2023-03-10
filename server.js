@@ -3,9 +3,6 @@
 // SETUP
 //
 //*********************************
-
-const { table } = require("console")
-const { query } = require("express")
 var express = require("express")
 var exphbs = require("express-handlebars")
 var util = require('util')
@@ -18,11 +15,18 @@ const { read_query, read_query_name_by_id,
 const PORT = process.env.PORT || 23374
 var app = express()
 
-// View Engine
-app.engine('handlebars', exphbs.engine({
+// Setting up the view engine
+const hbs = exphbs.create({
 
-    'defaultLayout': 'main'  // Referencing views/layouts/main.handlebars
-}))   
+    'defaultLayout': 'main',  // Referencing views/layouts/main.handlebars
+    'helpers': {
+        // Taken from https://github.com/helpers/handlebars-helpers
+        addCommas: function(number) {
+            return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}
+    }
+})
+
+app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 
 
@@ -237,8 +241,6 @@ app.put('/update/:entity', async(req, res, next) => {
 
     var entity_name = req.params.entity.toLowerCase()
     var entry_id = req.body[TABLE_TO_ID[entity_name]]
-
-    console.log('Req.body is:', req.body)
 
     if (!DB_TABLES.includes(entity_name)) {
 

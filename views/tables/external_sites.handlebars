@@ -1,6 +1,6 @@
 <p>External Site information</p>
 
-<table>
+<table id="data_table" data-entity="external_sites">
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -11,42 +11,27 @@
 
         <tr data-id="{{this.external_site_id}}">
             <td>{{this.external_site_id}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.dist_from_earth}}</td>
+            <td class="th_long">{{this.name}}</td>
+            <td class="th_long">{{this.dist_from_earth}}</td>
         </tr>
 
     {{/each}}
 
-    {{!-- <tr>
-        <td>1</td>
-        <td>International Space Station</td>
-        <td>254</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Europa</td>
-        <td>390,000,000</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>Asteroid Belt</td>
-        <td>111,500,000</td>
-    </tr> --}}
 </table>
 
 <div class="flexbox_forms">
 
-    <form action="/external_sites" method="POST">
+    <form id="add_form">
         <h3 class="form_title">Add an External Site</h3>
 
         <div class="form_group">
-            <label for="name">Name</label>
-            <input required value="" type="text" name="name" id="name"></input>
+            <label for="add_name">Name</label>
+            <input required value="" type="text" name="name" id="add_name"></input>
         </div>
 
         <div class="form_group">
-            <label for="dist_from_earth">Distance from Earth (mi)</label>
-            <input required type="number" name="dist_from_earth" id="dist_from_earth"></textarea>
+            <label for="add_dist_from_earth">Distance from Earth (mi)</label>
+            <input type="number" name="dist_from_earth" id="add_dist_from_earth"></textarea>
         </div>
 
         <button type="submit">Add</button>
@@ -54,29 +39,33 @@
     </form>
 
 
-    <form action="/external_sites?_method=PUT" method="POST">
+    <form id="update_form">
         <h3 class="form_title">Update an External Site</h3>
 
         <div class="form_group">
 
-            <label for="external_site_select">External Site</label>
-            <select name="external_site_select">
+            <label for="entry_select_update">External Site</label>
+            <select name="external_site_select" class="entry_select" id="entry_select_update">
 
-                <option value="1">International Space Station</option>
-                <option value="2">Europa</option>
-                <option value="3">Asteroid Belt</option>
+                <option value="-1">Select an External Site</option>
+
+                {{#each data}}
+
+                    <option value="{{this.external_site_id}}">{{this.name}}</option>
+
+                {{/each}}
                 
             </select>              
         </div>
 
         <div class="form_group">
-            <label for="name">Name</label>
-            <input value="" type="text" name="name" id="name"></input>
+            <label for="update_name">Name</label>
+            <input required value="" type="text" name="name" id="update_name"></input>
         </div>
 
         <div class="form_group">
-            <label for="dist_from_earth">Distance from Earth (mi)</label>
-            <input type="number" name="dist_from_earth" id="dist_from_earth"></textarea>
+            <label for="update_dist_from_earth">Distance from Earth (mi)</label>
+            <input type="number" name="dist_from_earth" id="update_dist_from_earth"></textarea>
         </div>
 
         <button type="submit">Update</button>
@@ -84,17 +73,21 @@
     </form>
 
 
-    <form action="/external_sites?_method=DELETE" method="POST">
+    <form id="delete_form">
         <h3 class="form_title">Delete an External Site</h3>
 
         <div class="form_group">
 
-            <label for="external_site_select">External Site</label>
-            <select name="external_site_select">
+            <label for="entry_select_delete">External Site</label>
+            <select name="external_site_select" id="entry_select_delete" class="entry_select">
 
-                <option value="1">International Space Station</option>
-                <option value="2">Europa</option>
-                <option value="3">Asteroid Belt</option>
+                <option value="-1">Select an External Site</option>
+
+                {{#each data}}
+
+                    <option value="{{this.external_site_id}}">{{this.name}}</option>
+
+                {{/each}}
                 
             </select>       
         </div>
@@ -104,3 +97,5 @@
     </form>
 
 </div>
+
+<script src="/js/entity_CRUD.js"></script>
