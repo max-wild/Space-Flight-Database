@@ -105,7 +105,7 @@ form{
     margin: 4px;
     margin-top: 20px;
     padding: 10px;
-    width: 300px;
+    width: 320px;
 
     border: 2px solid grey;
     border-radius: 6px;
@@ -124,4 +124,21 @@ form textarea{
 select{
 
     max-width: 200px;
+}
+
+button{
+
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+input, select, textarea{
+
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+input{
+
+    max-width: 146px;
 }

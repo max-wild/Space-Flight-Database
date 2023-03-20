@@ -10,7 +10,8 @@ var util = require('util')
 var db = require('./database/db-connector.js')
 const { read_query, read_query_name_by_id, 
     read_query_raw, create_query, 
-    update_query, delete_queries } = require('./database/query_master.js')
+    update_query, delete_queries,
+    mission_search_query } = require('./database/query_master.js')
 
 const PORT = process.env.PORT || 23374
 var app = express()
@@ -171,7 +172,7 @@ app.get('/:entity', async (req, res, next) => {
     try{
         var handlebars_data = await get_read_query_data(entity_name)
     }catch (error){
-        res.sendStatus(500)
+        return res.sendStatus(500)
     }
 
     // Renders views/tables/[entity].handlebars with "handlebars_data" passed in
@@ -295,6 +296,31 @@ app.delete('/delete/:entity', async (req, res, next) => {
 
     return res.sendStatus(204)
 })
+
+
+
+/**
+*    Special page for mission search
+*/
+app.get('/missions/search', async (req, res, next) => {
+
+    // Make sure the url parameter is there
+    var search_keyword = req.query.name || ''
+
+    // Otherwise, act on the search:
+    try{
+        var keyword_search_results = await attempt_query(mission_search_query(search_keyword))
+    }catch (error){
+        return res.sendStatus(500)
+    }
+
+    res.status(200).render('pages/missions_search', {
+
+        'data': keyword_search_results,
+        'search_keyword': search_keyword
+    })
+})
+
 
 /**
 *    Basic "send everything to home"

@@ -152,7 +152,7 @@ function create_query(entity_type, add_data) {
         // Create and return the query
         var mission_create_query = `INSERT INTO Missions (name, description, launch_date, successful_completion, organization_id)` +
         ` VALUES ("${add_data.name}", "${add_data.description}", ${update_launch}, ${update_completed}, 
-        ${update_orga});`
+        ${update_orga_id});`
 
         return mission_create_query
 
@@ -313,6 +313,26 @@ function delete_queries(entity_type, update_data) {
     }
 }
 
+/**
+ * @param {String} search_keyword 
+ * @returns A string representing a query for keyword search on the Missions talbe 
+ */
+function mission_search_query(search_keyword) {
+
+    var search_query = `SELECT m.mission_id, m.name, m.description, 
+    DATE_FORMAT(m.launch_date, "%Y-%m-%d") AS launch_date, 
+    m.successful_completion, org.name as organization_name
+    
+    FROM Missions AS m
+    
+    LEFT JOIN Organizations AS org ON m.organization_id = org.organization_id
+    WHERE m.name LIKE "%${search_keyword}%";`
+    // % is used in front and after the search keyword to notate
+    // that the keyword can be anywhere in the name
+
+    return search_query
+}
+
 module.exports = { 
 
     read_query,
@@ -320,5 +340,6 @@ module.exports = {
     read_query_raw,
     create_query,
     update_query,
-    delete_queries
+    delete_queries,
+    mission_search_query
 }

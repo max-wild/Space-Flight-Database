@@ -1,0 +1,44 @@
+<p>Mission Search: {{search_keyword}}</p>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Launch Date</th>
+        <th>Successfully Completed</th>
+        <th>Organization</th>
+    </tr>
+
+    {{#each data}}
+
+        <tr data-id="{{this.mission_id}}">
+            <td>{{this.mission_id}}</td>
+            <td>{{this.name}}</td>
+            <td class="th_longer">{{this.description}}</td>
+            <td>{{this.launch_date}}</td>
+            <td>{{this.successful_completion}}</td>
+            <td class="th_long">{{this.organization_name}}</td>
+        </tr>
+
+    {{/each}}
+
+</table>
+
+<div class="flexbox_forms">
+
+    <form action="/missions/search" method="GET">
+        <h3 class="form_title">Search for a Mission</h3>
+
+        <p>Search for missions by name:</p>
+
+        <div class="form_group">
+            <label for="search_name">Name</label>
+            <input value="" type="text" name="name" id="search_name"></input>
+        </div>
+
+        <button type="submit">Search</button>
+        <button type="reset">Clear</button>
+    </form>
+
+</div>
