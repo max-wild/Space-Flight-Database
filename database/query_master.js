@@ -1,7 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 const assert = require('assert')
-const { query } = require('express')
 
 // Returns the sql file as a string
 function sql_to_string (relative_dir) {
