@@ -125,7 +125,7 @@ var select_delete = document.getElementById('entry_select_delete')
 
 /**
  * 
- *      Functions
+ *      General-Purpose Functions
  * 
  */
 
@@ -134,7 +134,7 @@ var select_delete = document.getElementById('entry_select_delete')
  * crew_members entity has a special name: it's the first_name  
  * concatened with last_name.
  * 
- * @param {object} entry The entry to get the name form
+ * @param {object} entry The entry to get the name from
  * @returns The name of the object depending on the type
  */
 function get_entry_name(entry) {
@@ -393,12 +393,12 @@ function add_row_to_table (table_data, raw_data) {
     all_entry_data.push(raw_data)
 
     // Create a row and 4 cells
-    var row = document.createElement('TR')
+    var row = document.createElement('tr')
 
     // For every entry in the table, create it
     for (var i = 0; i < table_map.length; i++) {
 
-        var new_cell = document.createElement('TD')
+        var new_cell = document.createElement('td')
         new_cell.innerText = new_row[table_map[i]]
 
         row.appendChild(new_cell)

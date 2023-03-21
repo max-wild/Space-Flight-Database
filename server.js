@@ -215,11 +215,11 @@ app.post('/add/:entity', async (req, res, next) => {
         return next()
     }
 
-    var query_read_table = create_query(entity_name, req.body)
+    var query_create = create_query(entity_name, req.body)
 
     // Send in the new data
     try{
-        await attempt_query(query_read_table)
+        await attempt_query(query_create)
     }catch (error) {
         return res.sendStatus(500)
     }

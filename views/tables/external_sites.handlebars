@@ -1,18 +1,18 @@
-<p>External Site Information</p>
+<p>External Sites Information</p>
 
 <table id="data_table" data-entity="external_sites">
     <tr>
         <th>ID</th>
-        <th>Name</th>
-        <th>Distance From Earth (mi)</th>
+        <th class="th_long">Name</th>
+        <th class="th_long">Distance From Earth (mi)</th>
     </tr>
 
     {{#each data}}
 
         <tr data-id="{{this.external_site_id}}">
             <td>{{this.external_site_id}}</td>
-            <td class="th_long">{{this.name}}</td>
-            <td class="th_long">{{this.dist_from_earth}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.dist_from_earth}}</td>
         </tr>
 
     {{/each}}

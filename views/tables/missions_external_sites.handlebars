@@ -1,132 +1,112 @@
 <p>Missions and Their External Sites</p>
 
-<table>
-    <tr>
-        <th>Mission</th>
-        <th>External Site</th>
-    </tr>
+<div class="flexbox_intersection_table">
 
-    {{#each data}}
+    <table id="data_table" data-intersection_table="missions_external_sites">
         <tr>
-            <td>{{this.mission_name}}</td>
-            <td>{{this.external_site_name}}</td>
+            <th class="th_long">Mission</th>
+            <th>External Site</th>
         </tr>
-    {{/each}}
 
-    {{!-- <tr>
-        <td>Parkinson Investigation</td>
-        <td>International Space Station</td>
-    </tr>
-    <tr>
-        <td>Life Search on Europa</td>
-        <td>Europa</td>
-    </tr>
-    <tr>
-        <td>Asteroid Belt Mining</td>
-        <td>Asteroid Belt</td>
-    </tr>
-    <tr>
-        <td>Asteroid Belt Mining</td>
-        <td>International Space Station</td>
-    </tr> --}}
-</table>
+        {{#each data}}
+            <tr>
+                <td data-mission_id="{{this.mission_id}}">{{this.mission_name}}</td>
+                <td data-external_site_id="{{this.external_site_id}}">{{this.external_site_name}}</td>
+            </tr>
+        {{/each}}
 
-<div class="flexbox_forms">
+    </table>
 
-    <form action="/missions_crew_members" method="POST">
-        <h3 class="form_title">Add a Relationship</h3>
+    <div class="flexbox_forms">
 
-        <p>Add the external site to the mission:</p>
+        <form id="add_form">
+            <h3 class="form_title">Add a Relationship</h3>
 
-        <div class="form_group">
+            <p>Add the External Site to the Mission:</p>
 
-            <label for="mission_select">Mission</label>
-            <select name="mission_select">
+            <div class="form_group">
 
-                {{#each missions}}
+                <label for="select_add_one">Mission</label>
+                <select name="mission_select" id="select_add_one">
 
-                    <option value="{{this.mission_id}}">{{this.name}}</option>
+                    <option value="-1">Select a Mission</option>
 
-                {{/each}}
+                    {{#each missions}}
 
-                {{!-- <option value="1">Parkinson Investigation</option>
-                <option value="2">Life Search on Europa</option>
-                <option value="3">Asteroid Belt Mining</option>
-                <option value="4">Untitled Venus Terraforming Project</option> --}}
-                
-            </select>
+                        <option value="{{this.mission_id}}">{{this.name}}</option>
 
-        </div>
+                    {{/each}}
+                    
+                </select>
 
-        <div class="form_group">
+            </div>
 
-            <label for="external_site_select">External Site</label>
-            <select name="external_site_select">
+            <div class="form_group">
 
-                {{#each external_sites}}
+                <label for="select_add_two">External Site</label>
+                <select name="external_site_select" id="select_add_two">
 
-                    <option value="{{this.external_site_id}}">{{this.name}}</option>
-                
-                {{/each}}
-                
-                {{!-- <option value="1">International Space Station</option>
-                <option value="2">Europa</option>
-                <option value="3">Asteroid Belt</option> --}}
-                
-            </select>              
-        </div>
+                    <option value="-1">Select an External Site</option>
 
-        <button type="submit">Add</button>
-        <button type="reset">Clear</button>
-    </form>
+                    {{#each external_sites}}
+
+                        <option value="{{this.external_site_id}}">{{this.name}}</option>
+                    
+                    {{/each}}
+                    
+                </select>              
+            </div>
+
+            <button type="submit">Add</button>
+            <button type="reset">Clear</button>
+        </form>
 
 
 
-    <form action="/missions?_method=DELETE" method="POST">
-        <h3 class="form_title">Delete a Relationship</h3>
+        <form id="delete_form">
+            <h3 class="form_title">Delete a Relationship</h3>
 
-        <p>Remove the extermal site from the mission:</p>
+            <p>Remove the External Site from the Mission:</p>
 
-        <div class="form_group">
+            <div class="form_group">
 
-            <label for="mission_select">Mission</label>
-            <select name="mission_select">
+                <label for="select_delete_one">Mission</label>
+                <select name="mission_select" id="select_delete_one">
 
-                {{#each missions}}
+                    <option value="-1">Select a Mission</option>
 
-                    <option value="{{this.mission_id}}">{{this.name}}</option>
+                    {{#each missions}}
 
-                {{/each}}
+                        <option value="{{this.mission_id}}">{{this.name}}</option>
 
-                {{!-- <option value="1">Parkinson Investigation</option>
-                <option value="2">Life Search on Europa</option>
-                <option value="3">Asteroid Belt Mining</option>
-                <option value="4">Untitled Venus Terraforming Project</option> --}}
-                
-            </select>
+                    {{/each}}
+                    
+                </select>
 
-        </div>
+            </div>
 
-        <div class="form_group">
+            <div class="form_group">
 
-            <label for="external_site_select">External Site</label>
-            <select name="external_site_select">
+                <label for="select_delete_two">External Site</label>
+                <select name="external_site_select" id="select_delete_two">
 
-                {{#each external_sites}}
+                    <option value="-1">Select an External Site</option>
 
-                    <option value="{{this.external_site_id}}">{{this.name}}</option>
-                
-                {{/each}}
-                
-                {{!-- <option value="1">International Space Station</option>
-                <option value="2">Europa</option>
-                <option value="3">Asteroid Belt</option> --}}
+                    {{#each external_sites}}
 
-            </select>              
-        </div>
+                        <option value="{{this.external_site_id}}">{{this.name}}</option>
+                    
+                    {{/each}}
 
-        <button type="submit">Delete</button>
-        <button type="reset">Clear</button>
-    </form>
+                </select>              
+            </div>
+
+            <button type="submit">Delete</button>
+            <button type="reset">Clear</button>
+        </form>
+
+    </div>
+
+    <script src="/js/intersection_table_CRUD.js"></script>
 
 </div>

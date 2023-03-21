@@ -162,6 +162,24 @@ function create_query(entity_type, add_data) {
         VALUES ("${add_data.name}", "${add_data.country}");`
 
         return orga_create_query
+    
+    }else if (entity_type === 'missions_crew_members') {
+
+        // Use the IGNORE keyword to not add anything if the entry already exists
+        var mcm_create_query = `INSERT IGNORE INTO Missions_Crew_Members 
+        SET mission_id = ${add_data.mission_id}, 
+        crew_member_id = ${add_data.crew_member_id};`
+
+        return mcm_create_query
+    
+    }else if (entity_type === 'missions_external_sites') {
+
+        // Use the IGNORE keyword to not add anything if the entry already exists
+        var mes_create_query = `INSERT IGNORE INTO Missions_External_Sites 
+        SET mission_id = ${add_data.mission_id}, 
+        external_site_id = ${add_data.external_site_id};`
+
+        return mes_create_query
     }
 }
 
@@ -254,16 +272,16 @@ function update_query(entity_type, update_data) {
 
 /**
  * @param {String} entity_type 
- * @param {object} update_data 
- * @returns A list of strings representing all delete queries that should be performed
+ * @param {object} delete_data 
+ * @returns {Array} An array of strings representing all delete queries that should be performed
  */
-function delete_queries(entity_type, update_data) {
+function delete_queries(entity_type, delete_data) {
 
     assert (entity_type in db_queries_by_entities)
 
     if (entity_type === 'crew_members') {
 
-        var delete_entry_id = parseInt(update_data.id)
+        var delete_entry_id = parseInt(delete_data.id)
     
         // Delete from intersection table
         var crew_delete_queries = [
@@ -275,7 +293,7 @@ function delete_queries(entity_type, update_data) {
     
     }else if (entity_type === 'external_sites') {
 
-        var delete_entry_id = parseInt(update_data.id)
+        var delete_entry_id = parseInt(delete_data.id)
     
         // Delete from intersection table
         var site_delete_queries = [
@@ -287,7 +305,7 @@ function delete_queries(entity_type, update_data) {
     
     }else if (entity_type === 'missions') {
 
-        var delete_entry_id = parseInt(update_data.id)
+        var delete_entry_id = parseInt(delete_data.id)
     
         // Delete from intersection table
         var mission_delete_queries = [
@@ -300,7 +318,7 @@ function delete_queries(entity_type, update_data) {
 
     }else if (entity_type === 'organizations') {
 
-        var delete_entry_id = parseInt(update_data.id)
+        var delete_entry_id = parseInt(delete_data.id)
 
         var orga_delete_queries = [
 
@@ -310,6 +328,28 @@ function delete_queries(entity_type, update_data) {
         ]
 
         return orga_delete_queries
+
+    }else if (entity_type === 'missions_crew_members') {
+
+        var mcm_delete_queries = [
+             
+            `DELETE FROM Missions_Crew_Members 
+            WHERE mission_id = ${parseInt(delete_data.mission_id)}
+            AND crew_member_id = ${parseInt(delete_data.crew_member_id)};`
+        ]
+
+        return mcm_delete_queries
+    
+    }else if (entity_type === 'missions_external_sites') {
+
+        var mes_delete_queries = [
+             
+            `DELETE FROM Missions_External_Sites 
+            WHERE mission_id = ${parseInt(delete_data.mission_id)}
+            AND external_site_id = ${parseInt(delete_data.external_site_id)};`
+        ]
+
+        return mes_delete_queries
     }
 }
 
@@ -332,6 +372,8 @@ function mission_search_query(search_keyword) {
 
     return search_query
 }
+
+
 
 module.exports = { 
 

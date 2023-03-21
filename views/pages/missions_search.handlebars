@@ -4,10 +4,10 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Description</th>
+        <th class="th_longer">Description</th>
         <th>Launch Date</th>
         <th>Successfully Completed</th>
-        <th>Organization</th>
+        <th class="th_long">Organization</th>
     </tr>
 
     {{#each data}}
@@ -15,10 +15,10 @@
         <tr data-id="{{this.mission_id}}">
             <td>{{this.mission_id}}</td>
             <td>{{this.name}}</td>
-            <td class="th_longer">{{this.description}}</td>
+            <td>{{this.description}}</td>
             <td>{{this.launch_date}}</td>
             <td>{{this.successful_completion}}</td>
-            <td class="th_long">{{this.organization_name}}</td>
+            <td>{{this.organization_name}}</td>
         </tr>
 
     {{/each}}

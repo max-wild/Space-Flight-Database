@@ -1,136 +1,112 @@
 <p>Missions and Their Crew Members</p>
 
-<table>
-    <tr>
-        <th>Mission</th>
-        <th>Crew Member</th>
-    </tr>
+<div class="flexbox_intersection_table">
 
-    {{#each data}}
+    <table id="data_table" data-intersection_table="missions_crew_members">
         <tr>
-            <td>{{this.mission_name}}</td>
-            <td>{{this.first_name}} {{this.last_name}}</td>
+            <th class="th_long">Mission</th>
+            <th>Crew Member</th>
         </tr>
-    {{/each}}
 
-    {{!-- <tr>
-        <td>Parkinson Investigation</td>
-        <td>Angelina Sanchez</td>
-    </tr>
-    <tr>
-        <td>Parkinson Investigation</td>
-        <td>Abubakar Ajayi</td>
-    </tr>
-    <tr>
-        <td>Life Search on Europa</td>
-        <td>Sara Heron</td>
-    </tr>
-    <tr>
-        <td>Life Search on Europa</td>
-        <td>Angelina Sanchez</td>
-    </tr>
-    <tr>
-        <td>Asteroid Belt Mining</td>
-        <td>Sara Heron</td>
-    </tr> --}}
-</table>
+        {{#each data}}
+            <tr>
+                <td data-mission_id="{{this.mission_id}}">{{this.mission_name}}</td>
+                <td data-crew_member_id="{{this.crew_member_id}}">{{this.first_name}} {{this.last_name}}</td>
+            </tr>
+        {{/each}}
 
-<div class="flexbox_forms">
+    </table>
 
-    <form action="/missions_crew_members" method="POST">
-        <h3 class="form_title">Add a Relationship</h3>
+    <div class="flexbox_forms">
 
-        <p>Add the crew member to the mission:</p>
+        <form id="add_form">
+            <h3 class="form_title">Add a Relationship</h3>
 
-        <div class="form_group">
+            <p>Add the Crew Member to the Mission:</p>
 
-            <label for="mission_select">Mission</label>
-            <select name="mission_select">
+            <div class="form_group">
 
-                {{#each missions}}
+                <label for="select_add_one">Mission</label>
+                <select name="mission_select" id="select_add_one">
 
-                    <option value="{{this.mission_id}}">{{this.name}}</option>
+                    <option value="-1">Select a Mission</option>
 
-                {{/each}}
+                    {{#each missions}}
 
-                {{!-- <option value="1">Parkinson Investigation</option>
-                <option value="2">Life Search on Europa</option>
-                <option value="3">Asteroid Belt Mining</option>
-                <option value="4">Untitled Venus Terraforming Project</option> --}}
-                
-            </select>
+                        <option value="{{this.mission_id}}">{{this.name}}</option>
 
-        </div>
+                    {{/each}}
+                    
+                </select>
 
-        <div class="form_group">
+            </div>
 
-            <label for="crew_member_select">Crew Member</label>
-            <select name="crew_member_select">
+            <div class="form_group">
 
-                {{#each crew_members}}
+                <label for="select_add_two">Crew Member</label>
+                <select name="crew_member_select" id="select_add_two">
 
-                    <option value="{{this.crew_member_id}}">{{this.first_name}} {{this.last_name}}</option>
+                    <option value="-1">Select a Crew Member</option>
 
-                {{/each}}
+                    {{#each crew_members}}
 
-                {{!-- <option value="1">Angelina Sanchez</option>
-                <option value="2">Abubakar Ajayi</option>
-                <option value="3">Sara Heron</option> --}}
-                
-            </select>        
-        </div>
+                        <option value="{{this.crew_member_id}}">{{this.first_name}} {{this.last_name}}</option>
 
-        <button type="submit">Add</button>
-        <button type="reset">Clear</button>
-    </form>
+                    {{/each}}
+                    
+                </select>        
+            </div>
+
+            <button type="submit">Add</button>
+            <button type="reset">Clear</button>
+        </form>
 
 
 
-    <form action="/missions?_method=DELETE" method="POST">
-        <h3 class="form_title">Delete a Relationship</h3>
+        <form id="delete_form">
+            <h3 class="form_title">Delete a Relationship</h3>
 
-        <p>Remove the crew member from the mission:</p>
+            <p>Remove the Crew Member from the Mission:</p>
 
-        <div class="form_group">
+            <div class="form_group">
 
-            <label for="mission_select">Mission</label>
-            <select name="mission_select">
+                <label for="select_delete_one">Mission</label>
+                <select name="mission_select" id="select_delete_one">
 
-                {{#each missions}}
+                    <option value="-1">Select a Mission</option>
 
-                    <option value="{{this.mission_id}}">{{this.name}}</option>
+                    {{#each missions}}
 
-                {{/each}}
+                        <option value="{{this.mission_id}}">{{this.name}}</option>
 
-                {{!-- <option value="1">Parkinson Investigation</option>
-                <option value="2">Life Search on Europa</option>
-                <option value="3">Asteroid Belt Mining</option>
-                <option value="4">Untitled Venus Terraforming Project</option> --}}
-                
-            </select>
+                    {{/each}}
+                    
+                </select>
 
-        </div>
+            </div>
 
-        <div class="form_group">
+            <div class="form_group">
 
-            <label for="crew_member_select">Crew Member</label>
-            <select name="crew_member_select">
+                <label for="select_delete_two">Crew Member</label>
+                <select name="crew_member_select" id="select_delete_two">
 
-                {{#each crew_members}}
+                    <option value="-1">Select a Crew Member</option>
 
-                    <option value="{{this.crew_member_id}}">{{this.first_name}} {{this.last_name}}</option>
+                    {{#each crew_members}}
 
-                {{/each}}
+                        <option value="{{this.crew_member_id}}">{{this.first_name}} {{this.last_name}}</option>
 
-                {{!-- <option value="1">Angelina Sanchez</option>
-                <option value="2">Abubakar Ajayi</option>
-                <option value="3">Sara Heron</option> --}}
-                
-            </select>        
-        </div>
+                    {{/each}}
+                    
+                </select>        
+            </div>
 
-        <button type="submit">Delete</button>
-        <button type="reset">Clear</button>
-    </form>
+            <button type="submit">Delete</button>
+            <button type="reset">Clear</button>
+        </form>
+
+    </div>
+
+    <script src="/js/intersection_table_CRUD.js"></script>
 
 </div>

@@ -94,7 +94,7 @@ th, td{
     display: flex;
     flex-direction: row;
     
-    justify-content:stretch;
+    justify-content: stretch;
     align-items: flex-start;
     
     flex-wrap: wrap;
@@ -141,4 +141,15 @@ input, select, textarea{
 input{
 
     max-width: 146px;
+}
+
+.flexbox_intersection_table{
+
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: space-around;
+    align-items: flex-start;
 }
