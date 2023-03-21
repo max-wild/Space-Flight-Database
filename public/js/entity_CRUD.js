@@ -634,6 +634,8 @@ delete_entry_form.addEventListener('submit', function (e) {
             // Remove the row from the table if successful
             delete_row(delete_id)
 
+            // Clear the input fields for another transaction
+            delete_entry_form.reset()
         }
         else if (xhttp.readyState == 4 && xhttp.status != 204) {
             console.error('There was an error with the input.')
