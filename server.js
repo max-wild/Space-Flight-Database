@@ -1,3 +1,27 @@
+/**
+ * Summary.
+ *      HTTP get, post, put, and delete requests for the Space Flight Databse server.
+ *      Last Updated 03/20/2023.
+ *
+ * Description. 
+ *      Using Express, node.js will handle HTTP requests on the specified port.
+ *      Queries are requested by database/query_master.js, and server.js uses
+ *      async/await functionality to wait for asynchronous server queries to
+ *      finish.
+ *      
+ * Citation.
+ *      All code written in every JavaScript file is written originially, 
+ *      based on the CS 340 tutorial lesson learned from the GitHub, with the exception
+ *      of db-connector.js which was heavily adapted from CS 340 code online.
+ *      Another exception is the addCommas helpers function: this was copied
+ *      directly from the URL https://github.com/helpers/handlebars-helpers.
+ * 
+ *      entity_CRUD.js and intersection_table_CRUD.js were also written originally
+ *      and based on information learned from the CS 340 tutorial lesson.
+ *
+ * @since  03.20.2023
+ */
+
 //*********************************
 //
 // SETUP
@@ -21,7 +45,7 @@ const hbs = exphbs.create({
 
     'defaultLayout': 'main',  // Referencing views/layouts/main.handlebars
     'helpers': {
-        // Taken from https://github.com/helpers/handlebars-helpers
+        // Not original, taken from SOURCE: https://github.com/helpers/handlebars-helpers
         addCommas: function(number) {
             return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}
     }

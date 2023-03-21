@@ -24,6 +24,16 @@ Command to run server in dev mode (so auto restarts when JavaScript updates):
 
 `npm devStart`
 
+## Citations and Date
+
+*      Last Updated 03/20/2023.
+*
+*      All code written in every JavaScript file is written originially, 
+*      based on the CS 340 tutorial lesson learned from the GitHub, with the exception
+*      of db-connector.js which was heavily adapted from CS 340 code online.
+*      Another exception is the addCommas helpers function: this was copied
+*      directly from the URL https://github.com/helpers/handlebars-helpers.
+
 ## Database Schema
 
 ![Database Schema](docs/images/schema.png)
