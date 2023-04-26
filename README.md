@@ -24,9 +24,6 @@ With upward trends for space flight expansion, this database will support catalo
 
 ## 👽 Install and Run the package
 
-
-![Missions Webpage](docs/images/webpage_crew_members.png)
-
 ### 📁 Inside a terminal window in the file directory:
 
 Command to install packages:
@@ -47,16 +44,20 @@ Note that the host, username, and password settings for connecting to a database
 
 Once your database is up, running, and ready to be connected to, tell it to run `DDL.sql` found in `/docs/` to set up the tables. Then, tell it to run `DML.sql` to populate the tables with initial data!
 
+Connect to the database at [http://]localhost:23374.
+
+![Missions Webpage](docs/images/webpage_crew_members.png)
+
 ## 🔭 Database Schema
 
 ![Database Schema](docs/images/schema.png)
 
 ## 👩‍🚀 Citations
 
-&emsp;|&emsp;All code written in every JavaScript file is written
-&emsp;|&emsp;originally, based on the CS 340 tutorial lesson pages from
-&emsp;|&emsp;OSU and other online resources, with the exception
-&emsp;|&emsp;of db-connector.js which was heavily adapted from CS
-&emsp;|&emsp;340 code online. Also, the addCommas helper function
-&emsp;|&emsp;was taken from GitHub, which documented in the code,
+&emsp;|&emsp;All code written in every JavaScript file is written  
+&emsp;|&emsp;originally, based on the CS 340 tutorial lesson pages from  
+&emsp;|&emsp;OSU and other online resources, with the exception  
+&emsp;|&emsp;of db-connector.js which was heavily adapted from CS  
+&emsp;|&emsp;340 code online. Also, the addCommas helper function  
+&emsp;|&emsp;was taken from GitHub, which documented in the code,  
 &emsp;|&emsp;however it was never used. 
