@@ -15,9 +15,6 @@
  *      of db-connector.js which was heavily adapted from CS 340 code online.
  *      Another exception is the addCommas helpers function: this was copied
  *      directly from the URL https://github.com/helpers/handlebars-helpers.
- * 
- *      entity_CRUD.js and intersection_table_CRUD.js were also written originally
- *      and based on information learned from the CS 340 tutorial lesson.
  *
  * @since  03.20.2023
  */
