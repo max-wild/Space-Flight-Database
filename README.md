@@ -4,11 +4,11 @@
 
 ## 📡 Overview
 
-⭐ The Space Flight Database is a **MySQL project** used to track the progress of human space flight. It tracks **four entities**--missions, crew members, externa sites, and space organizations. It uses a **webpage frontend** for users to enter database updates and search information inside.
+⭐ The Space Flight Database is a **MySQL project** used to track the progress of human space flight. It tracks **four entities**--missions, crew members, external sites, and space organizations. It uses a **webpage frontend** for users to enter database updates and search information inside.
 
-⭐ It includes **two intersections tables** for managing the relationships between missions / crew and missions / organizations. These relationships are cleanly updated when the database receives a deletion request, such as deleting a mission which used to be associated with other groups.
+⭐ It includes **two intersections tables** for managing the relationships between missions / crew and missions / organizations. These relationships are cleanly updated when the database receives a deletion request, such as deleting a mission that used to be associated with other groups.
 
-⭐ Complete **CRUD operations** are implemented both for the frontend and server side handling of the database. This is Create, Read, Update, and Delete capabilities, and it was achieved using SQL commands. **Handlebars** is used with Node.js for server side templating. The **static SQL read queries** are located in `/database/queries/read/`, and all **dynamic SQL queries** are generated in the `/database/query_master.js` JavaScript file, depending on what data is to be created, updated, or deleted. The missions entity allows for **keyword search**, using an SQL query to search for missions by name. In the UI, all **input HTML elements are automatically updated** using JavaScript when an select element value is picked.
+⭐ Complete **CRUD operations** are implemented both for the frontend and server-side handling of the database. This is Create, Read, Update, and Delete capabilities, and it was achieved using SQL commands. **Handlebars** is used with Node.js for server-side templating. The **static SQL read queries** are located in `/database/queries/read/`, and all **dynamic SQL queries** are generated in the `/database/query_master.js` JavaScript file, depending on what data is to be created, updated, or deleted. The missions entity allows for **keyword search**, using an SQL query to search for missions by name. In the UI, all **input HTML elements are automatically updated** using JavaScript when a select element value is picked.
 
 ![Missions Webpage](docs/images/webpage_missions.png)
 
