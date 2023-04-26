@@ -59,5 +59,5 @@ Connect to the database at [http://]localhost:23374.
 &emsp;|&emsp;OSU and other online resources, with the exception  
 &emsp;|&emsp;of db-connector.js which was heavily adapted from CS  
 &emsp;|&emsp;340 code online. Also, the addCommas helper function  
-&emsp;|&emsp;was taken from GitHub, which documented in the code,  
+&emsp;|&emsp;was taken from GitHub, which is documented in the code,  
 &emsp;|&emsp;however it was never used. 
